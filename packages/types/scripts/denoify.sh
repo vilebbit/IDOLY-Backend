@@ -2,9 +2,9 @@
 set -eu
 
 shopt -s globstar
-rm -rf dist/
 rm -rf denodist/
 mkdir -p denodist/
-cp **/*.ts denodist
-sed -i -E "s/from '\.\/(.+)'/from '.\/\\1.ts'/g" denodist/**/*.ts
+cp ./*.ts denodist
+cp jsr.json README.md denodist
+sed -i -E "s/from '\.\/(.+)'/from '.\/\\1.ts'/g" denodist/*.ts
 echo "Done! Please point Deno to denodist/"

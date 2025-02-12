@@ -1,0 +1,17 @@
+{
+    "name": "@hoshimei/hoshimi-types",
+    "version": "2.15.0",
+    "license": "AGPL-3.0-or-later",
+    "exports": {
+        ".": "./index.ts",
+        "./apiMapping": "./apiMapping.ts",
+        "./helpers": "./helpers.ts",
+        "./octoData": "./octoData.ts",
+        "./ProtoApi": "./ProtoApi.ts",
+        "./ProtoEnum": "./ProtoEnum.ts",
+        "./ProtoMaster": "./ProtoMaster.ts",
+        "./ProtoTransaction": "./ProtoTransaction.ts",
+        "./resourceMapping": "./resourceMapping.ts",
+        "./types": "./types.ts"
+    }
+}

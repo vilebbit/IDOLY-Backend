@@ -146,4 +146,4 @@ solis/*.key
 dump.cs
 
 # types
-/packages/types/denodist
+packages/types/denodist
