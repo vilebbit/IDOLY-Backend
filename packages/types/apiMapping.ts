@@ -66,6 +66,7 @@ export type APIMapping = {
       | 'skillId1'
       | 'skillId2'
       | 'skillId3'
+      | 'skillId4'
       | 'releaseDate'
       | 'stories'
       | 'liveAbilityId'
