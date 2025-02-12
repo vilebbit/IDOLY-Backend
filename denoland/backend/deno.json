@@ -15,19 +15,19 @@
     }
   },
   "imports": {
-    "$fresh/": "https://deno.land/x/fresh@1.6.8/",
+    "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "preact": "https://esm.sh/preact@10.19.6",
     "preact/": "https://esm.sh/preact@10.19.6/",
     "preact-render-to-string": "https://esm.sh/*preact-render-to-string@6.2.1",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
     "@utils/": "./utils/",
-    "hoshimi-types/": "https://esm.sh/hoshimi-types@2.14.1/",
-    "lodash/": "https://cdn.skypack.dev/lodash@4.17.21/",
-    "xxhashjs": "https://cdn.skypack.dev/xxhashjs@0.2.2",
-    "octokit": "https://esm.sh/octokit@4.0.2",
-    "mongodb": "https://deno.land/x/mongo@v0.32.0/mod.ts",
-    "sentry": "https://deno.land/x/sentry@8.11.0/index.mjs",
+    "hoshimi-types": "jsr:@hoshimei/hoshimi-types@2.15.0",
+    "lodash": "npm:lodash@4.17.21",
+    "xxhashjs": "npm:xxhashjs@0.2.2",
+    "octokit": "npm:octokit@4.0.2",
+    "mongodb": "https://deno.land/x/mongo@v0.34.0/mod.ts",
+    "sentry": "npm:@sentry/deno@9.0.1",
     "@dev/hoshimi-types": "../../packages/types/denodist/index.ts"
   },
   "exclude": [
