@@ -1,21 +1,23 @@
 // Generated from ProtoTransaction.proto
+
 import type {
   CardDisplayType,
   HomePositionType,
   MessageStatusType,
   MissionStatusType,
-  NotificationType,
-  ParameterType,
   PhotoImageType,
-  PointType,
   ProfileBackgroundType,
-  ProfileColorType,
-  ProfileInformationType,
   ProfileLayoutType,
-  ResourceType,
+  ProfileInformationType,
+  ProfileColorType,
   ResultRankType,
   StoryStatusType,
   TelephoneStatusType,
+  ResourceType,
+  ParameterType,
+  LeagueDeckType,
+  NotificationType,
+  PointType,
   TutorialType,
 } from './ProtoEnum'
 
@@ -44,6 +46,8 @@ export type Payslip = {
   hierarchyRank: number
   year: number
   month: number
+  archiveCompanyPoint: number
+  archiveCompanyPointCoefficientPermil: number
 }
 
 export type User = {
@@ -72,6 +76,7 @@ export type User = {
   inviteHostUserId: string
   buddyCardId: string
   nextPhotoImageIds: string[]
+  lastHomeTalkDrawTime: string
   managerLevel: number
   cardSupportMaxNumber: number
 }
@@ -102,6 +107,8 @@ export type UserCard = {
   lastEnhanceTime: string
   rankTotalExp: number
   displayType: CardDisplayType
+  skillLevel4: number
+  evolutionLevelTotalExp: string
   level: number
   rarity: number
   vocal: string
@@ -133,6 +140,10 @@ export type UserCard = {
   baseActivityAbilityId: string
   basePhotoEquipableCount: number
   rank: number
+  evolutionLevel: number
+  skillId4: string
+  baseSkillLevel4: number
+  baseSkillId4: string
 }
 
 export type UserCharacter = {
@@ -151,8 +162,11 @@ export type UserCharacter = {
   liveCostumeId: string
   favoriteHairId: string
   liveHairId: string
+  companyEnjoyPoint: string
+  lastHomeTalkFirstReadTime: string
   activityLevel: number
   audienceCandidateAmount: number
+  companyBonusParameterInfos: CompanyBonusParameterInfo[]
 }
 
 export type UserCharacterMusic = {
@@ -170,6 +184,11 @@ export type UserCostume = {
 
 export type UserDecoration = {
   decorationId: string
+}
+
+export type UserDutyPoint = {
+  dutyPointId: string
+  amount: string
 }
 
 export type UserEmblem = {
@@ -256,6 +275,10 @@ export type UserPhoto = {
   shootingTime: string
   focusCharacterId: string
   photoRecipeId: string
+  isDreamBase: boolean
+  dreamMaterialPhotoRarity: number
+  dreamMaterialPhotoLevel: number
+  dreamMaterialPhotoRecipeId: string
 }
 
 export type UserPhotoAbility = {
@@ -264,6 +287,10 @@ export type UserPhotoAbility = {
   missionId: string
   grade: number
   isAvailable: boolean
+}
+
+export type UserPhotoPose = {
+  photoPoseId: string
 }
 
 export type UserPhotoRecipe = {
@@ -280,7 +307,7 @@ export type UserProfile = {
   birthDay: string
   backgroundType: ProfileBackgroundType
   layoutType: ProfileLayoutType
-  twitterInfo: TwitterInfo | undefined
+  twitterInfo: TwitterInfo
   decorationId: string
   informationType: ProfileInformationType
   colorType: ProfileColorType
@@ -301,10 +328,39 @@ export type UserQuest = {
   highestScoreRank: ResultRankType
 }
 
+export type UserShowcase = {
+  number: number
+  name: string
+  comment: string
+  musicId: string
+  hashTagIds: string[]
+  isOpen: boolean
+  thumbnailAssetId: string
+  showcaseFrameId: string
+}
+
+export type UserShowcaseMusic = {
+  showcaseMusicId: string
+}
+
+export type UserShowcaseMyset = {
+  number: number
+  name: string
+  showcaseFrameId: string
+  isSave: boolean
+}
+
+export type UserShowcaseToy = {
+  showcaseToyId: string
+  amount: string
+}
+
 export type UserStory = {
   storyId: string
   statusType: StoryStatusType
   isInvalid: boolean
+  isUseActivatePhotoShootingStoryTicket: boolean
+  isPhotoShot: boolean
 }
 
 export type UserTelephone = {
@@ -317,7 +373,7 @@ export type UserTelephone = {
 export type ConsumptionResult = {
   resourceType: ResourceType
   resourceId: string
-  amount: number
+  amount: string
   beforeAmount: string
   afterAmount: string
 }
@@ -344,7 +400,6 @@ export type Reward = {
 export type RewardResult = {
   resourceType: ResourceType
   resourceId: string
-  amount: number
   beforeAmount: string
   afterAmount: string
   isNew: boolean
@@ -352,6 +407,8 @@ export type RewardResult = {
   isGift: boolean
   duplicateRewardResults: RewardResult[]
   additionalGifts: Reward[]
+  amountI64: string
+  increasedAfterEvolutionLevel: number
 }
 
 export type UserActivityFanEventProgress = {
@@ -374,6 +431,18 @@ export type UserCardSupport = {
   removableTime: string
 }
 
+export type CompanyBonusParameterInfo = {
+  bonusParameterType: ParameterType
+  bonusParameterUpPermil: string
+}
+
+export type UserCompany = {
+  enjoyPoint: string
+  trustPoint: string
+  salaryPoint: string
+  isAlreadyTransitioned: boolean
+}
+
 export type UserDeck = {
   number: number
   name: string
@@ -388,6 +457,13 @@ export type UserDeckPosition = {
   photoIds: string[]
   costumeId: string
   hairId: string
+}
+
+export type UserDuty = {
+  dutyId: string
+  currentReceivedTotalObtainRewardNumber: string
+  totalObtainPointAmount: string
+  currentExchangedRewardNumbers: string[]
 }
 
 export type UserGachaButton = {
@@ -405,7 +481,7 @@ export type UserGift = {
   message: string
   postedTime: string
   limitTime: string
-  photoGift: PhotoGift | undefined
+  photoGift: PhotoGift
 }
 
 export type PhotoGift = {
@@ -420,7 +496,7 @@ export type UserGiftHistory = {
   message: string
   postedTime: string
   receivedTime: string
-  photoGift: PhotoGiftHistory | undefined
+  photoGift: PhotoGiftHistory
 }
 
 export type PhotoGiftHistory = {
@@ -430,6 +506,18 @@ export type PhotoGiftHistory = {
 export type UserInvite = {
   inviteCode: string
   receivedHostRewardTotalAmount: string
+}
+
+export type UserLeagueDeckPosition = {
+  leagueSeasonId: string
+  deckType: LeagueDeckType
+  position: number
+  cardId: string
+  part1AccessoryId: string
+  part2AccessoryId: string
+  photoIds: string[]
+  costumeId: string
+  hairId: string
 }
 
 export type UserLove = {
@@ -465,9 +553,15 @@ export type UserPublic = {
   publicUserId: string
 }
 
+export type UserShowcaseLike = {
+  dailyLikeCount: string
+  rewardLikeCount: string
+}
+
 export type UserStaff = {
   parameterType: ParameterType
   level: number
+  levelLimitBreakRank: number
 }
 
 export type UserTotalCount = {
@@ -483,6 +577,18 @@ export type UserTotalCount = {
   activityRefreshCount: string
   guildCheckInCount: string
   photoRetouchCount: string
+  dreamAreaGenerateCount: string
+}
+
+export type UserTourArea = {
+  tourId: string
+  decks: UserTourDeck[]
+  isRetired: boolean
+}
+
+export type UserTourDeck = {
+  position: number
+  cardId: string
 }
 
 export type UserTutorial = {

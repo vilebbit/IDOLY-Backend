@@ -1,87 +1,96 @@
 // Generated from ProtoMaster.proto
+
 import type {
   AccessoryCategoryType,
   AccessoryParameterType,
-  ActivityAbilityType,
   ActivityFanEventType,
   AreaType,
-  AssetDownloadType,
+  ItemType,
   AttributeType,
-  BacksidePanelAttributeType,
-  BacksidePanelType,
-  CardImageType,
-  CardLevelReleaseType,
+  MoodType,
   CardType,
+  CardDisplayType,
+  CardImageType,
   CharacterPersonalityType,
+  SimpleCharacterPersonalityType,
   CharacterSdPersonalityType,
+  PsylliumColorType,
   CharacterType,
-  DayOfWeekType,
+  CompanyEnjoyObtainPointItemGrowthType,
+  PhotoPoseType,
   EventMissionType,
-  ExerciseHintType,
-  ExtraStoryPartType,
   ExtraStoryType,
+  ExtraStoryPartType,
   FunctionLockType,
-  GachaLimitType,
   GachaType,
-  HelpDisplayTargetType,
-  HelpType,
+  ResourceType,
+  GachaLimitType,
   HierarchyRewardType,
+  HomePositionType,
   HomeActionType,
   HomePlaceType,
-  HomePositionType,
-  ItemType,
-  JoinedGuildType,
+  HomeBackgroundVersionType,
   LinkType,
-  LiveAbilityLevelBackgroundRankType,
   LiveAbilityType,
+  LiveAbilityLevelBackgroundRankType,
   LiveResultType,
-  LiveSkipType,
-  LiveTipType,
-  LiveType,
-  LoadingDisplayTargetType,
   LoadingType,
+  LoadingDisplayTargetType,
   LoginBonusType,
   LoveHomeActionType,
+  MessageType,
   MessageInstantType,
   MessageRarityType,
-  MessageType,
   MissionCategoryType,
   MissionType,
-  MoodType,
-  MusicChartType,
-  ParameterType,
-  PhotoAbilityGradeType,
-  PhotoAbilityTargetType,
-  PhotoAbilityType,
-  PhotoShootingActionType,
-  PhotoShootingMotionType,
-  PlatformType,
-  PointType,
-  PsylliumColorType,
-  RaceActivityLessonRewardType,
-  RacePanelType,
-  RaceRankingType,
-  ResourceType,
-  ResultRankType,
-  RewardSortResourceType,
-  RewardSortTargetType,
-  SalaryDetailType,
-  SimpleCharacterPersonalityType,
-  SkillCategoryType,
-  SkillEfficacyType,
-  SkillTargetType,
-  SkillTriggerType,
+  CompanyEnjoyCharacterMissionCategoryType,
+  CompanyTrustMissionCategoryType,
   StageType,
+  PhotoAbilityType,
+  LiveType,
   StatusEffectType,
+  PhotoShootingActionType,
+  LiveSkipType,
+  RacePanelType,
+  RaceActivityLessonRewardType,
+  RaceRankingType,
+  SkillEfficacyType,
+  ShowcaseToyPutType,
+  SkillTriggerType,
+  ParameterType,
   StoryAdvPlayType,
   StoryPartType,
-  TitleBackgroundType,
-  TutorialNavigationPositionType,
-  TutorialNavigationType,
+  PointType,
   TutorialType,
+  AssetDownloadType,
+  BacksidePanelType,
+  BacksidePanelAttributeType,
+  HelpType,
+  HelpDisplayTargetType,
+  LiveTipType,
+  MusicChartType,
+  PhotoAbilityTargetType,
+  PhotoPoseMotionType,
+  PhotoLookingType,
+  PhotoShootingMotionType,
+  RewardSortTargetType,
+  RewardSortResourceType,
+  SalaryDetailType,
+  ShowcaseHashtagCategoryType,
+  SkillCategoryType,
+  SkillTargetType,
+  PlatformType,
+  TitleBackgroundType,
+  ActivityAbilityType,
+  CardLevelReleaseType,
+  DayOfWeekType,
+  JoinedGuildType,
+  ResultRankType,
+  ExerciseHintType,
+  PhotoAbilityGradeType,
+  TutorialNavigationType,
+  TutorialNavigationPositionType,
 } from './ProtoEnum'
-
-export const protobufPackage = 'master'
 
 export type PhotoContestSection = {
   id: string
@@ -272,21 +281,11 @@ export type Card = {
   order: number
   releaseDate: string
   rewardCostumeId: string
-  imageType1: CardImageType
-  displayPositionX1: number
-  displayPositionY1: number
-  displayScale1: number
-  highlightDisplayPositionX1: number
-  highlightDisplayPositionY1: number
-  highlightDisplayScale1: number
-  imageType2: CardImageType
-  displayPositionX2: number
-  displayPositionY2: number
-  displayScale2: number
-  highlightDisplayPositionX2: number
-  highlightDisplayPositionY2: number
-  highlightDisplayScale2: number
   obtainMessage: string
+  rewardHairId: string
+  cardEvolutionLevelReleaseGroupId: string
+  cardEvolutionLevelGroupId: string
+  skillId4: string
   stories: CardStory[]
   messages: CardMessage[]
   homeTalks: CardHomeTalk[]
@@ -298,8 +297,36 @@ export type CardDuplicateReward = {
   rewardId: string
 }
 
+export type CardEvolution = {
+  cardId: string
+  evolutionLevel: number
+  rewardCostumeId: string
+  rewardHairId: string
+}
+
+export type CardEvolutionMessage = {
+  cardId: string
+  evolutionLevel: number
+  number: number
+  characterId: string
+  evolveMessage: string
+  voiceAssetId: string
+}
+
 export type CardHomeTalk = {
   homeTalkId: string
+}
+
+export type CardImage = {
+  cardId: string
+  displayType: CardDisplayType
+  imageType: CardImageType
+  displayPositionX: number
+  displayPositionY: number
+  displayScale: number
+  highlightDisplayPositionX: number
+  highlightDisplayPositionY: number
+  highlightDisplayScale: number
 }
 
 export type CardMessage = {
@@ -367,7 +394,21 @@ export type Character = {
   isHomeDanceTarget: boolean
   type: CharacterType
   groupName: string
-  loveInfo: LoveCharacterInfo | undefined
+  loveInfo: LoveCharacterInfo
+  companyEnjoyStories: CharacterCompanyEnjoyStory[]
+  homeMainCharacterStayMotionAssetId: string
+  homeMainCharacterStayAdditionMotionAssetId: string
+  homeMainCharacterStayStartMotionAssetId: string
+  homeMainCharacterStayPropAssetId: string
+  gachaMovieName: string
+}
+
+export type CharacterCompanyEnjoyStory = {
+  number: number
+  storyId: string
+  viewConditionId: string
+  unlockConditionId: string
+  assetId: string
 }
 
 export type CharacterCostumeGroup = {
@@ -401,15 +442,94 @@ export type CharacterGroupMapping = {
   order: number
 }
 
+export type CompanyEnjoyCharacterLevelSetting = {
+  characterId: string
+  levelKey: number
+  achieveRewardId: string
+}
+
+export type CompanyEnjoyHomeAction = {
+  id: string
+  characterId: string
+  motionAssetId: string
+  additionMotionAssetId: string
+  voiceAssetId: string
+  text: string
+  weight: number
+}
+
+export type CompanyEnjoyObtainPointItemSetting = {
+  characterId: string
+  itemId: string
+  obtainPoint: number
+  growthType: CompanyEnjoyObtainPointItemGrowthType
+}
+
+export type CompanyGrade = {
+  id: string
+  name: string
+  requiredPoint: string
+  achieveRewardId: string
+  buttonAssetId: string
+  backgroundAssetId: string
+}
+
+export type CompanySalarySetting = {
+  id: string
+  calcActivateYear: number
+  calcActivateMonth: number
+  functionUnlockConditionId: string
+  pointCoefficientPermil: number
+}
+
+export type CompanyTrustLevel = {
+  levelKey: number
+  requiredPoint: string
+  achieveRewardId: string
+}
+
 export type ConditionAccessoryAmount = {
   accessoryId: string
   amountGte: string
+}
+
+export type ConditionActivatePhotoShootingStory = {
+  storyId: string
 }
 
 export type ConditionActivityLevel = {
   characterId: string
   levelGte: number
   levelLte: number
+}
+
+export type ConditionAllObtainCards = {
+  cardIds: string[]
+}
+
+export type ConditionAllObtainCostumes = {
+  costumeIds: string[]
+}
+
+export type ConditionAllObtainHairs = {
+  hairIds: string[]
+}
+
+export type ConditionAnyObtainCards = {
+  cardIds: string[]
+}
+
+export type ConditionAnyObtainCostumes = {
+  costumeIds: string[]
+}
+
+export type ConditionAnyObtainHairs = {
+  hairIds: string[]
+}
+
+export type ConditionCardEvolutionLevelGte = {
+  cardId: string
+  evolutionLevelGte: number
 }
 
 export type ConditionCardLevel = {
@@ -439,6 +559,20 @@ export type ConditionClearMission = {
 
 export type ConditionClearQuest = {
   questId: string
+}
+
+export type ConditionCompanyEnjoyCharacterLevelGte = {
+  characterId: string
+  levelGte: number
+}
+
+export type ConditionCompanyEnjoyCharacterPointGte = {
+  characterId: string
+  pointGte: string
+}
+
+export type ConditionCompanyGradeGte = {
+  companyGradeId: string
 }
 
 export type ConditionContestQuestHighestRank = {
@@ -482,6 +616,30 @@ export type ConditionLiveCharacterHighestScore = {
 export type ConditionMaxQuestScoreRank = {
   questId: string
   rankGte: number
+}
+
+export type ConditionNotAllObtainCards = {
+  cardIds: string[]
+}
+
+export type ConditionNotAllObtainCostumes = {
+  costumeIds: string[]
+}
+
+export type ConditionNotAllObtainHairs = {
+  hairIds: string[]
+}
+
+export type ConditionNotAnyObtainCards = {
+  cardIds: string[]
+}
+
+export type ConditionNotAnyObtainCostumes = {
+  costumeIds: string[]
+}
+
+export type ConditionNotAnyObtainHairs = {
+  hairIds: string[]
 }
 
 export type ConditionNotSatisfyCondition = {
@@ -533,6 +691,10 @@ export type ConditionSatisfyCondition = {
   conditionId: string
 }
 
+export type ConditionShootPhotoShootingStory = {
+  storyId: string
+}
+
 export type ConditionWearCostume = {
   costumeId: string
 }
@@ -561,6 +723,7 @@ export type Costume = {
   motifAssetId: string
   isUserUnavailable: boolean
   defaultHairId: string
+  impossiblePhotoPoseTypes: PhotoPoseType[]
 }
 
 export type Decoration = {
@@ -802,6 +965,7 @@ export type Hair = {
   order: number
   name: string
   releaseTime: string
+  impossiblePhotoPoseTypes: PhotoPoseType[]
 }
 
 export type HierarchyDetailGrade = {
@@ -854,6 +1018,9 @@ export type HomeBackground = {
   positions: number[]
   angles: number[]
   characterCostumeGroupId: string
+  homeBackgroundCategoryId: string
+  bgmAssetId: string
+  versionType: HomeBackgroundVersionType
 }
 
 export type HomeDrama = {
@@ -891,6 +1058,21 @@ export type HomeDramaFree = {
   playStartMillisecond: number
 }
 
+export type HomeMainCharacterStay = {
+  id: string
+  homePositionType: HomePositionType
+  homeBackgroundCategoryId: string
+  viewConditionId: string
+  fixedCharacterId: string
+  positionX: number
+  positionY: number
+  positionZ: number
+  angleX: number
+  angleY: number
+  angleZ: number
+  isHomeTalk: boolean
+}
+
 export type HomeNavigation = {
   homeNavigationId: string
   characterId: string
@@ -900,6 +1082,14 @@ export type HomeNavigation = {
   linkDetail: string
   viewConditionId: string
   order: number
+}
+
+export type HomeSubCharacterStayGroup = {
+  groupId: string
+  homeBackgroundCategoryId: string
+  viewConditionId: string
+  weight: number
+  stays: HomeSubCharacterStay[]
 }
 
 export type HomeTalk = {
@@ -913,6 +1103,11 @@ export type HomeTalk = {
   choiceText: string
   managerText: string
   reliability: number
+  title: string
+  cardId: string
+  displayConditionDescription: string
+  order: number
+  releaseDate: string
   characterTalks: CharacterTalk[]
 }
 
@@ -1173,6 +1368,9 @@ export type Mission = {
   linkDetail: string
   progresses: MissionProgress[]
   eventMissionId: string
+  companyEnjoyCharacterId: string
+  companyEnjoyCharacterMissionCategoryType: CompanyEnjoyCharacterMissionCategoryType
+  companyTrustMissionCategoryType: CompanyTrustMissionCategoryType
 }
 
 export type MissionProgress = {
@@ -1218,6 +1416,7 @@ export type MusicMasteryRewardSet = {
   id: string
   level: number
   rewardId: string
+  rewardStoneAmount: number
 }
 
 export type PhotoAbility = {
@@ -1328,6 +1527,60 @@ export type PhotoContestSectionReward = {
   rewardId: string
 }
 
+export type PhotoExpression = {
+  id: string
+  name: string
+  thumbnailAssetId: string
+  stageId: string
+  costumeTypeIds: string[]
+  forceCostumeTypeId: string
+  order: number
+  viewConditionId: string
+  unlockConditionId: string
+  impossibleShootingCharacterIds: string[]
+  impossiblePhotoPoseIds: string[]
+}
+
+export type PhotoExpressionStagePosition = {
+  stageId: string
+  number: number
+  name: string
+  possiblePhotoPoseType: PhotoPoseType
+  initialPhotoPoseId: string
+  characterPositions: number[]
+  characterAngles: number[]
+  cameraPositions: number[]
+  cameraAngles: number[]
+  upperLimit: number
+  lowerLimit: number
+  previewCameraPositions: number[]
+  previewCameraAngles: number[]
+  previewUpperLimit: number
+  previewLowerLimit: number
+  lookEffectAssetId: string
+}
+
+export type PhotoFacial = {
+  id: string
+  name: string
+  order: number
+  unlockConditionId: string
+}
+
+export type PhotoFacialMotion = {
+  photoFacialId: string
+  characterId: string
+  motionAssetId: string
+  voiceAssetId: string
+}
+
+export type PhotoPoseMotion = {
+  photoPoseId: string
+  characterId: string
+  motionAssetId: string
+  propAssetIds: string[]
+}
+
 export type PhotoQuestMusic = {
   id: string
   assetId: string
@@ -1387,6 +1640,11 @@ export type PhotoShootingCharacterMotion = {
   motionDelaySec: number
   upperLimit: number
   lowerLimit: number
+}
+
+export type PhotoShootingReplaceCharacter = {
+  targetCharacterId: string
+  replacedCharacterId: string
 }
 
 export type PhotoShootingSimplePersonalityMotion = {
@@ -1669,6 +1927,10 @@ export type Setting = {
   exerciseFixedBannerNoticeId: string
   deckEntrustCoolTimeLotteryCoefficientPermil: number
   deckEntrustMentalLotteryCoefficientPermil: number
+  storyPhotoShootingDefaultCharacterId: string
+  homeTalkDrawTimesPerDay: number
+  questContestTicketLimitUseCount: number
+  searchSkillNameCountLimit: number
   statusEffectTypeStrengthList: StatusEffectType[]
   statusEffectTypeWeaknessDownList: StatusEffectType[]
   statusEffectTypeWeaknessOtherList: StatusEffectType[]
@@ -1687,6 +1949,62 @@ export type Setting = {
   leagueRankingDisplayRankLimit: number
   loveSaveSlotNum: number
   secondsPerLoveLessonStep: number
+  dreamQuestCharacterAdvantagePermil: number
+  dreamGenerateAreaBasePhotoRequiredRarity: number
+  dreamAreaName: string
+  dreamGenerateAreaMaterialPhotoRequiredRarity: number
+  diceMaxItemPossessionNum: number
+  diceRankingDisplayNum: number
+  shelfPerAlbumPhotoLimit: number
+  companyRankingDisplayNum: number
+  companyEnjoyCharacterRankingDisplayNum: number
+  companyBulkReceiveMissionCountLimit: number
+}
+
+export type ShowcaseFrame = {
+  id: string
+  order: number
+  name: string
+  description: string
+  assetId: string
+  unlockConditionId: string
+  showcaseToyPutCountLimit: number
+}
+
+export type ShowcaseMusic = {
+  musicId: string
+  order: number
+  showcaseMusicFilterId: string
+}
+
+export type ShowcaseSetting = {
+  id: string
+  rewardLikeObtainLimit: number
+  likeCountLimit: number
+  showcaseToyObtainLimit: number
+  showcaseDetailNameLimit: number
+  showcaseDetailDescriptionLimit: number
+  showcaseMysetNameLimit: number
+  showcaseFrameDefaultId: string
+  rewardLikeDailyRecovery: number
+  showcaseUndoCountLimit: number
+  showcaseThumbnailDefaultAssetId: string
+  rewardLikeUsedRewardId: string
+  defaultShowcaseToyShopConsumptionItemId: string
+}
+
+export type ShowcaseToy = {
+  id: string
+  filterIds: string[]
+  categoryId: string
+  name: string
+  assetId: string
+  description: string
+  hashTagIds: string[]
+  putTypes: ShowcaseToyPutType[]
+  order: number
+  photoShootingCharacterIds: string[]
+  angle: number
 }
 
 export type SkillDetail = {
@@ -1703,6 +2021,7 @@ export type SkillEfficacy = {
   grade: number
   maxGrade: number
   skillTargetId: string
+  limitBreakMaxGrade: number
 }
 
 export type SkillLevel = {
@@ -1743,6 +2062,10 @@ export type Story = {
   advPlayTypes: StoryAdvPlayType[]
   advAssetIds: string[]
   additionalDisplayCharacterIds: string[]
+  branchFirstText: string
+  branchCautionText: string
+  branchBgmAssetId: string
+  branchChoices: StoryBranchChoice[]
 }
 
 export type StoryEpisode = {
@@ -1816,6 +2139,11 @@ export type ActivityAbility = {
   levels: ActivityAbilityLevel[]
 }
 
+export type AppCapacityLimit = {
+  appCapacityLimitKey: number
+  isDataExist: boolean
+}
+
 export type AssetDownload = {
   assetId: string
   type: AssetDownloadType
@@ -1842,6 +2170,19 @@ export type BoxGachaGroup = {
 export type CardDuplicateExp = {
   initialRarity: number
   exp: number
+}
+
+export type CardEvolutionLevel = {
+  groupId: string
+  level: number
+  exp: number
+  duplicateObtainExp: number
+}
+
+export type CardEvolutionLevelRelease = {
+  groupId: string
+  level: number
+  targets: CardEvolutionLevelReleaseTarget[]
 }
 
 export type CardLevel = {
@@ -1889,6 +2230,25 @@ export type ComboAdvantage = {
   advantagePermil: number
 }
 
+export type CompanyEnjoyCharacterLevel = {
+  levelKey: number
+  requiredPoint: string
+  bonusParameterType: ParameterType
+  bonusParameterUpPermil: number
+}
+
+export type CompanyEnjoyLevel = {
+  levelKey: number
+  requiredPoint: string
+}
+
+export type CompanyPoint = {
+  id: string
+  name: string
+  description: string
+  assetId: string
+}
+
 export type Condition = {
   id: string
   settings: ConditionSetting[]
@@ -1920,6 +2280,16 @@ export type Division = {
   id: string
   order: number
   name: string
+}
+
+export type DutyPoint = {
+  id: string
+  name: string
+  assetId: string
+  description: string
+  order: string
+  expiredTime: string
+  howToGet: string
 }
 
 export type ExerciseAccessoryGroup = {
@@ -1988,6 +2358,11 @@ export type HierarchyGrade = {
   order: number
 }
 
+export type HomeBackgroundCategory = {
+  id: string
+  name: string
+}
+
 export type HomeDramaPosition = {
   homeDramaPositionId: string
   name: string
@@ -2018,6 +2393,7 @@ export type Item = {
   value: number
   order: number
   salePrice: number
+  isPhotoShootingCharacterOnly: boolean
 }
 
 export type LiveAbility = {
@@ -2066,6 +2442,18 @@ export type PhotoAbilityTarget = {
   id: string
   type: PhotoAbilityTargetType
   targetId: string
+}
+
+export type PhotoPose = {
+  id: string
+  name: string
+  description: string
+  thumbAssetId: string
+  poseType: PhotoPoseType
+  poseMotionType: PhotoPoseMotionType
+  lookingType: PhotoLookingType
+  order: number
+  releaseDatetime: string
 }
 
 export type PhotoRarityLevel = {
@@ -2125,6 +2513,33 @@ export type Salary = {
   amount: number
 }
 
+export type ShowcaseHashtag = {
+  id: string
+  number: number
+  name: string
+  assetId: string
+  categoryType: ShowcaseHashtagCategoryType
+}
+
+export type ShowcaseMusicFilter = {
+  id: string
+  name: string
+  order: number
+}
+
+export type ShowcaseToyCategory = {
+  id: string
+  order: number
+  name: string
+}
+
+export type ShowcaseToyShopFilter = {
+  id: string
+  name: string
+  order: number
+  assetId: string
+}
+
 export type Skill = {
   id: string
   name: string
@@ -2137,6 +2552,14 @@ export type SkillTarget = {
   id: string
   type: SkillTargetType
   isOpponent: boolean
+}
+
+export type StaffLevelLimitBreakRank = {
+  parameterType: ParameterType
+  rank: number
+  levelLimit: number
+  consumptionItemAmount: string
+  consumptionGoldAmount: string
 }
 
 export type StaffTraining = {
@@ -2154,11 +2577,17 @@ export type Stage = {
   order: number
   timeDifference: string
   isHideWithPhotoShooting: boolean
+  overrideAssetVariationId: string
 }
 
 export type StatusEffectName = {
   statusEffectType: StatusEffectType
   name: string
+}
+
+export type StoreGppProduct = {
+  productId: string
+  point: number
 }
 
 export type StoreProduct = {
@@ -2188,6 +2617,7 @@ export type TitleBackground = {
 export type TotalStaffEnhanceAdvantage = {
   enhanceCount: number
   advantagePermil: number
+  isDataExist: boolean
 }
 
 export type Wording = {
@@ -2206,6 +2636,11 @@ export type ActivityAbilityLevel = {
   value: number
 }
 
+export type CardEvolutionLevelReleaseTarget = {
+  type: CardLevelReleaseType
+  number: number
+}
+
 export type CardLevelReleaseTarget = {
   type: CardLevelReleaseType
   number: number
@@ -2221,84 +2656,114 @@ export type LoveCharacterInfo = {
   enName: string
   cv: string
   colorCode: string
+  description: string
+  nameRegex: string
 }
 
 export type ConditionSetting = {
-  satisfyCondition: ConditionSatisfyCondition | undefined
-  notSatisfyCondition: ConditionNotSatisfyCondition | undefined
-  startHours: ConditionStartHours | undefined
-  notLoginDays: ConditionNotLoginDays | undefined
-  accumulationLoginDays: ConditionAccumulationLoginDays | undefined
-  managerLevel: ConditionManagerLevel | undefined
-  deckMaxOverallValue: ConditionDeckMaxOverallValue | undefined
-  clearQuest: ConditionClearQuest | undefined
-  maxQuestScoreRank: ConditionMaxQuestScoreRank | undefined
-  dailyQuestClear: ConditionDailyQuestClear | undefined
-  dailyAreaClear: ConditionDailyAreaClear | undefined
-  animeStoryPoint: ConditionAnimeStoryPoint | undefined
-  gameStoryPoint: ConditionGameStoryPoint | undefined
-  groupStoryPoint: ConditionGroupStoryPoint | undefined
-  readStory: ConditionReadStory | undefined
-  clearMission: ConditionClearMission | undefined
-  obtainCharacter: ConditionObtainCharacter | undefined
-  obtainCard: ConditionObtainCard | undefined
-  obtainCostume: ConditionObtainCostume | undefined
-  wearCostume: ConditionWearCostume | undefined
-  cardLevel: ConditionCardLevel | undefined
-  cardRarity: ConditionCardRarity | undefined
-  photoReportPityTimer: ConditionPhotoReportPityTimer | undefined
-  activityLevel: ConditionActivityLevel | undefined
-  exchangeCount: ConditionExchangeCount | undefined
-  term: ConditionTerm | undefined
-  dayOfWeek: ConditionDayOfWeek | undefined
-  time: ConditionTime | undefined
-  obtainItem: ConditionObtainItem | undefined
-  itemAmount: ConditionItemAmount | undefined
-  gold: ConditionGold | undefined
-  stone: ConditionStone | undefined
-  obtainEmblem: ConditionObtainEmblem | undefined
-  openGacha: ConditionOpenGacha | undefined
-  drawGacha: ConditionDrawGacha | undefined
-  purchaseShop: ConditionPurchaseShop | undefined
-  platformType: ConditionPlatformType | undefined
-  division: ConditionDivision | undefined
-  joinedGuild: ConditionJoinedGuild | undefined
-  activityFanEventLevel: ConditionActivityFanEventLevel | undefined
-  activityPromotionLevel: ConditionActivityPromotionLevel | undefined
-  activityRefreshLevel: ConditionActivityRefreshLevel | undefined
-  contestQuestTotalScore: ConditionContestQuestTotalScore | undefined
-  clearArea: ConditionClearArea | undefined
-  reliability: ConditionReliability | undefined
-  hierarchyDetailGradeId: ConditionHierarchyDetailGradeId | undefined
-  hierarchyPointGte: ConditionHierarchyPointGte | undefined
-  diary: ConditionDiary | undefined
-  staffTrainTotalCount: ConditionStaffTrainTotalCount | undefined
-  photoShootTotalCount: ConditionPhotoShootTotalCount | undefined
-  tourAreaProgress: ConditionTourAreaProgress | undefined
-  activityFanEventBestScoreRank:
-    | ConditionActivityFanEventBestScoreRank
-    | undefined
-  activityFanEventTotalCount: ConditionActivityFanEventTotalCount | undefined
-  activityPromotionTotalHours: ConditionActivityPromotionTotalHours | undefined
-  activityRefreshTotalCount: ConditionActivityRefreshTotalCount | undefined
-  liveCharacterHighestScore: ConditionLiveCharacterHighestScore | undefined
-  fanAmount: ConditionFanAmount | undefined
-  highestSalary: ConditionHighestSalary | undefined
-  characterPhotoAmount: ConditionCharacterPhotoAmount | undefined
-  tutorialStep: ConditionTutorialStep | undefined
-  forumCreateReplyCount: ConditionForumCreateReplyCount | undefined
-  birthday: ConditionBirthDay | undefined
-  finishedMessage: ConditionFinishedMessage | undefined
-  pvpOpen: ConditionPvpOpen | undefined
-  obtainAccessory: ConditionObtainAccessory | undefined
-  accessoryAmount: ConditionAccessoryAmount | undefined
-  wearLiveCostume: ConditionWearLiveCostume | undefined
-  contestQuestHighestRank: ConditionContestQuestHighestRank | undefined
-  comebackUser: ConditionComebackUser | undefined
-  gameStartTerm: ConditionGameStartTerm | undefined
-  obtainHair: ConditionObtainHair | undefined
-  wearHair: ConditionWearHair | undefined
-  wearLiveHair: ConditionWearLiveHair | undefined
+  satisfyCondition: ConditionSatisfyCondition
+  notSatisfyCondition: ConditionNotSatisfyCondition
+  startHours: ConditionStartHours
+  notLoginDays: ConditionNotLoginDays
+  accumulationLoginDays: ConditionAccumulationLoginDays
+  managerLevel: ConditionManagerLevel
+  deckMaxOverallValue: ConditionDeckMaxOverallValue
+  clearQuest: ConditionClearQuest
+  maxQuestScoreRank: ConditionMaxQuestScoreRank
+  dailyQuestClear: ConditionDailyQuestClear
+  dailyAreaClear: ConditionDailyAreaClear
+  animeStoryPoint: ConditionAnimeStoryPoint
+  gameStoryPoint: ConditionGameStoryPoint
+  groupStoryPoint: ConditionGroupStoryPoint
+  readStory: ConditionReadStory
+  clearMission: ConditionClearMission
+  obtainCharacter: ConditionObtainCharacter
+  obtainCard: ConditionObtainCard
+  obtainCostume: ConditionObtainCostume
+  wearCostume: ConditionWearCostume
+  cardLevel: ConditionCardLevel
+  cardRarity: ConditionCardRarity
+  photoReportPityTimer: ConditionPhotoReportPityTimer
+  activityLevel: ConditionActivityLevel
+  exchangeCount: ConditionExchangeCount
+  term: ConditionTerm
+  dayOfWeek: ConditionDayOfWeek
+  time: ConditionTime
+  obtainItem: ConditionObtainItem
+  itemAmount: ConditionItemAmount
+  gold: ConditionGold
+  stone: ConditionStone
+  obtainEmblem: ConditionObtainEmblem
+  openGacha: ConditionOpenGacha
+  drawGacha: ConditionDrawGacha
+  purchaseShop: ConditionPurchaseShop
+  platformType: ConditionPlatformType
+  division: ConditionDivision
+  joinedGuild: ConditionJoinedGuild
+  activityFanEventLevel: ConditionActivityFanEventLevel
+  activityPromotionLevel: ConditionActivityPromotionLevel
+  activityRefreshLevel: ConditionActivityRefreshLevel
+  contestQuestTotalScore: ConditionContestQuestTotalScore
+  clearArea: ConditionClearArea
+  reliability: ConditionReliability
+  hierarchyDetailGradeId: ConditionHierarchyDetailGradeId
+  hierarchyPointGte: ConditionHierarchyPointGte
+  diary: ConditionDiary
+  staffTrainTotalCount: ConditionStaffTrainTotalCount
+  photoShootTotalCount: ConditionPhotoShootTotalCount
+  tourAreaProgress: ConditionTourAreaProgress
+  activityFanEventBestScoreRank: ConditionActivityFanEventBestScoreRank
+  activityFanEventTotalCount: ConditionActivityFanEventTotalCount
+  activityPromotionTotalHours: ConditionActivityPromotionTotalHours
+  activityRefreshTotalCount: ConditionActivityRefreshTotalCount
+  liveCharacterHighestScore: ConditionLiveCharacterHighestScore
+  fanAmount: ConditionFanAmount
+  highestSalary: ConditionHighestSalary
+  characterPhotoAmount: ConditionCharacterPhotoAmount
+  tutorialStep: ConditionTutorialStep
+  forumCreateReplyCount: ConditionForumCreateReplyCount
+  birthday: ConditionBirthDay
+  finishedMessage: ConditionFinishedMessage
+  pvpOpen: ConditionPvpOpen
+  obtainAccessory: ConditionObtainAccessory
+  accessoryAmount: ConditionAccessoryAmount
+  wearLiveCostume: ConditionWearLiveCostume
+  contestQuestHighestRank: ConditionContestQuestHighestRank
+  comebackUser: ConditionComebackUser
+  gameStartTerm: ConditionGameStartTerm
+  obtainHair: ConditionObtainHair
+  wearHair: ConditionWearHair
+  wearLiveHair: ConditionWearLiveHair
+  satisfyConditions: ConditionSatisfyConditions
+  notSatisfyConditions: ConditionNotSatisfyConditions
+  allObtainCostumes: ConditionAllObtainCostumes
+  anyObtainCostumes: ConditionAnyObtainCostumes
+  notAllObtainCostumes: ConditionNotAllObtainCostumes
+  notAnyObtainCostumes: ConditionNotAnyObtainCostumes
+  allObtainHairs: ConditionAllObtainHairs
+  anyObtainHairs: ConditionAnyObtainHairs
+  notAllObtainHairs: ConditionNotAllObtainHairs
+  notAnyObtainHairs: ConditionNotAnyObtainHairs
+  allObtainCards: ConditionAllObtainCards
+  anyObtainCards: ConditionAnyObtainCards
+  notAllObtainCards: ConditionNotAllObtainCards
+  notAnyObtainCards: ConditionNotAnyObtainCards
+  activatePhotoShootingStory: ConditionActivatePhotoShootingStory
+  shootPhotoShootingStory: ConditionShootPhotoShootingStory
+  dutyExchangeReward: ConditionDutyExchangeReward
+  dutyExchangeRewardCount: ConditionDutyExchangeRewardCount
+  dutyTotalObtainPointCount: ConditionDutyTotalObtainPointCount
+  companyGradeGte: ConditionCompanyGradeGte
+  companyPointGte: ConditionCompanyPointGte
+  companyEnjoyLevelGte: ConditionCompanyEnjoyLevelGte
+  companyEnjoyPointGte: ConditionCompanyEnjoyPointGte
+  companyEnjoyCharacterLevelGte: ConditionCompanyEnjoyCharacterLevelGte
+  companyTrustLevelGte: ConditionCompanyTrustLevelGte
+  companyTrustPointGte: ConditionCompanyTrustPointGte
+  companySalaryPointGte: ConditionCompanySalaryPointGte
+  staffLevelGte: ConditionStaffLevelGte
+  companyEnjoyCharacterPointGte: ConditionCompanyEnjoyCharacterPointGte
+  cardEvolutionLevelGte: ConditionCardEvolutionLevelGte
 }
 
 export type ConditionStartHours = {
@@ -2477,6 +2942,58 @@ export type ConditionComebackUser = {
   isComebackUser: boolean
 }
 
+export type ConditionSatisfyConditions = {
+  conditions: ConditionSatisfyCondition[]
+}
+
+export type ConditionNotSatisfyConditions = {
+  conditions: ConditionNotSatisfyCondition[]
+}
+
+export type ConditionDutyExchangeReward = {
+  dutyId: string
+  dutyExchangeRewardNumber: string
+}
+
+export type ConditionDutyExchangeRewardCount = {
+  dutyId: string
+  countGte: string
+}
+
+export type ConditionDutyTotalObtainPointCount = {
+  dutyId: string
+  countGte: string
+}
+
+export type ConditionCompanyPointGte = {
+  pointGte: string
+}
+
+export type ConditionCompanyEnjoyLevelGte = {
+  levelGte: number
+}
+
+export type ConditionCompanyEnjoyPointGte = {
+  pointGte: string
+}
+
+export type ConditionCompanyTrustLevelGte = {
+  levelGte: number
+}
+
+export type ConditionCompanyTrustPointGte = {
+  pointGte: string
+}
+
+export type ConditionCompanySalaryPointGte = {
+  pointGte: string
+}
+
+export type ConditionStaffLevelGte = {
+  parameterType: ParameterType
+  levelGte: number
+}
+
 export type ConsumptionResource = {
   resourceType: ResourceType
   resourceIds: string[]
@@ -2499,6 +3016,23 @@ export type HelpContent = {
   order: number
   targetTypes: HelpDisplayTargetType[]
   assetIds: string[]
+}
+
+export type HomeSubCharacterStay = {
+  position: number
+  simplePersonalityType: SimpleCharacterPersonalityType
+  homePositionTypes: HomePositionType[]
+  motionAssetId: string
+  additiveMotionAssetId: string
+  tapAssistMotionAssetId: string
+  positionX: number
+  positionY: number
+  positionZ: number
+  angleX: number
+  angleY: number
+  angleZ: number
+  talkHomePositionTypes: HomePositionType[]
+  propAssetId: string
 }
 
 export type CharacterTalk = {
@@ -2530,6 +3064,12 @@ export type RewardResource = {
   resourceType: ResourceType
   resourceId: string
   amount: number
+}
+
+export type StoryBranchChoice = {
+  index: number
+  text: string
+  advAssetId: string
 }
 
 export type StoryChapter = {
