@@ -26,7 +26,7 @@ import type {
   PhotoAioMeta,
 } from './types'
 import type { OnlyOutput, InputAndOutput, MultiString } from './helpers'
-import { NoticeInfo } from './ProtoApi'
+import type { NoticeInfo } from './ProtoApi'
 
 export type APIMapping = {
   ActivityAbility: InputAndOutput<{ id: string }, ActivityAbility>
