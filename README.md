@@ -32,7 +32,7 @@ This repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo) for all 
 
 All components in IDOLY-Backend are licensed under the [AGPL-3.0 license](LICENSE)
 
-[build-svg]: https://github.com/MalitsPlus/IDOLY-Backend/actions/workflows/build.yml/badge.svg
-[build-yml]: https://github.com/MalitsPlus/IDOLY-Backend/actions/workflows/build.yml
-[data-svg]: https://circleci.com/gh/MalitsPlus/SolisClient.svg?style=svg
-[data-status]: https://app.circleci.com/pipelines/github/MalitsPlus/SolisClient/240/workflows/08606004-73af-4fbf-993b-83e209ee58f5
+[build-svg]: https://github.com/vilebbit/IDOLY-Backend/actions/workflows/build.yml/badge.svg
+[build-yml]: https://github.com/vilebbit/IDOLY-Backend/actions/workflows/build.yml
+[data-svg]: https://circleci.com/gh/vilebbit/SolisClient.svg?style=svg
+[data-status]: https://app.circleci.com/pipelines/github/vilebbit/SolisClient/240/workflows/08606004-73af-4fbf-993b-83e209ee58f5
