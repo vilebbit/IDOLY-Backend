@@ -2,7 +2,7 @@ import type { APIMapping } from 'hoshimi-types/'
 import { dbGet } from '@utils/dbGet.ts'
 import apiWrapper from '@utils/apiWrapper.ts'
 import { parseMultiString } from '@utils/parse.ts'
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 
 const responder: APIMapping['Character'] = async ({ ids: _ids }) => {
   const ids = parseMultiString(_ids)

@@ -2,7 +2,7 @@ import type { APIMapping } from 'hoshimi-types/'
 import { dbGet } from '@utils/dbGet.ts'
 import apiWrapper from '@utils/apiWrapper.ts'
 import dedup from '@utils/dedup.ts'
-import flattenDepth from 'lodash/flattenDepth'
+import flattenDepth from 'lodash/flattenDepth.js'
 
 async function getAllSkillDetailsString(): Promise<string[]> {
   const skills = await dbGet('Skill')

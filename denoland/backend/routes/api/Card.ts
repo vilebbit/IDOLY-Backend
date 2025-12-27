@@ -3,7 +3,7 @@ import { dbGet } from '@utils/dbGet.ts'
 import apiWrapper from '@utils/apiWrapper.ts'
 import filterRelease from '@utils/filterRelease.ts'
 import createErrStatus from '@utils/createErrStatus.ts'
-import pick from 'lodash/pick'
+import pick from 'lodash/pick.js'
 
 const responder: APIMapping['Card'] = async ({ id }) => {
   const cards = await dbGet(

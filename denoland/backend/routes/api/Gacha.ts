@@ -2,8 +2,8 @@ import type { APIMapping } from 'hoshimi-types/'
 import { dbGet } from '@utils/dbGet.ts'
 import apiWrapper from '@utils/apiWrapper.ts'
 import { GachaType } from 'hoshimi-types/ProtoEnum'
-import pick from 'lodash/pick'
-import uniqBy from 'lodash/uniqBy'
+import pick from 'lodash/pick.js'
+import uniqBy from 'lodash/uniqBy.js'
 
 const responder: APIMapping['Gacha'] = async () => {
   const [Gachas, Conditions, Cards] = await Promise.all([
