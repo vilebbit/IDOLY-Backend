@@ -22,7 +22,7 @@
     "hoshimi-types": "jsr:@hoshimei/hoshimi-types@2.15.1",
     "lodash": "npm:lodash@4.17.21",
     "octokit": "https://esm.sh/octokit@4.0.2",
-    "mongodb": "https://deno.land/x/mongo@v0.32.0/mod.ts",
+    "mongodb": "npm:mongodb@7.0.0",
     "sentry": "npm:@sentry/deno@10.32.1",
     "@dev/hoshimi-types": "../../packages/types/denodist/index.ts"
   },
