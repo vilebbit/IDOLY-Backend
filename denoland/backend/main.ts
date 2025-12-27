@@ -1,25 +1,29 @@
-/// <reference no-default-lib="true" />
-/// <reference lib="dom" />
-/// <reference lib="dom.asynciterable" />
-/// <reference lib="deno.ns" />
-/// <reference lib="deno.unstable" />
-// denoland/deploy_feedback#527
-if (!Deno.permissions.querySync) {
-  ;(Deno.permissions as unknown as Record<string, unknown>)['querySync'] = (
-    _pd: Deno.PermissionDescriptor
-  ): { state: string } => ({ state: 'granted' })
-}
-
+import { Application, Router } from '@oak/oak'
 import * as Sentry from 'sentry'
-
+import manifest, { ROUTES } from './routes.ts'
 import checkEnv from '@utils/checkEnv.ts'
-import { start } from '$fresh/server.ts'
-import manifest from './fresh.gen.ts'
-import { SENTRY_DSN, isDevelopEnv } from './utils/env.ts'
+import { isDevelopEnv, SENTRY_DSN } from './utils/env.ts'
 
 checkEnv()
 Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: isDevelopEnv ? 1.0 : 0.2,
 })
-await start(manifest)
+
+const app = new Application()
+const router = new Router()
+
+Object.entries(manifest.routes).map(([name, routes]) =>
+  router.all(name, routes)
+)
+
+console.log(router.routes())
+
+app.use(router.routes())
+app.use(router.allowedMethods())
+
+app.addEventListener('listen', ({ port }) =>
+  console.log(`App is listening on port http://localhost:${port}`)
+)
+
+await app.listen({ port: 8000 })
