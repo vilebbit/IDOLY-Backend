@@ -1,8 +1,8 @@
-import { Handlers } from 'https://deno.land/x/fresh@1.0.1/server.ts'
 import jsonResponse, { errorResponse } from '@utils/jsonResponse.ts'
 import { isAdmin } from '@utils/requirePermission.ts'
 import kv from '@utils/kv.ts'
 import { CommuXKey } from '@utils/const.ts'
+import { rawWrapper } from '@utils/apiWrapper.ts'
 
 /**
  * PUT /manage/writeCommu
@@ -15,30 +15,30 @@ import { CommuXKey } from '@utils/const.ts'
  *     }],
  * }
  */
-export const handler: Handlers = {
-  async PUT(req) {
-    if (!isAdmin(req)) {
-      return errorResponse('Unauthorized', 403)
-    }
-    const json: Record<string, string> = await req.json?.()
-    if (!json.title || !json.advAssetId || !Array.isArray(json.lines)) {
-      return new Response('Invalid title, advAssetId, or lines found', {
-        status: 400,
-      })
-    }
-    const { title, advAssetId, lines } = json
-    const deletedCount = await kv.delWithFilter(CommuXKey, { advAssetId })
-    return await kv
-      .put(
-        CommuXKey,
-        lines.map(({ name, text }) => ({
-          name,
-          text,
-          advAssetId,
-          title,
-        }))
-      )
-      .then(() => jsonResponse({ ok: true, deleted: deletedCount }))
-      .catch((x) => errorResponse(x, 500))
-  },
+async function _handler(req: Request): Promise<Response> {
+  if (!isAdmin(req)) {
+    return errorResponse('Unauthorized', 403)
+  }
+  const json: Record<string, any> = await req.json?.()
+  if (!json.title || !json.advAssetId || !Array.isArray(json.lines)) {
+    return new Response('Invalid title, advAssetId, or lines found', {
+      status: 400,
+    })
+  }
+  const { title, advAssetId, lines } = json
+  const deletedCount = await kv.delWithFilter(CommuXKey, { advAssetId })
+  return await kv
+    .put(
+      CommuXKey,
+      lines.map(({ name, text }) => ({
+        name,
+        text,
+        advAssetId,
+        title,
+      }))
+    )
+    .then(() => jsonResponse({ ok: true, deleted: deletedCount }))
+    .catch((x) => errorResponse(x, 500))
 }
+
+export const handler = rawWrapper(_handler)
