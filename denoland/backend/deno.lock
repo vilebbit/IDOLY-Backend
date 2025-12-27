@@ -15,6 +15,7 @@
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/media-types@1": "1.1.0",
     "jsr:@std/path@1": "1.1.4",
+    "npm:@sentry/deno@10.32.1": "10.32.1",
     "npm:lodash@4.17.21": "4.17.21",
     "npm:path-to-regexp@^6.3.0": "6.3.0"
   },
@@ -77,6 +78,19 @@
     }
   },
   "npm": {
+    "@opentelemetry/api@1.9.0": {
+      "integrity": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg=="
+    },
+    "@sentry/core@10.32.1": {
+      "integrity": "sha512-PH2ldpSJlhqsMj2vCTyU0BI2Fx1oIDhm7Izo5xFALvjVCS0gmlqHt1udu6YlKn8BtpGH6bGzssvv5APrk+OdPQ=="
+    },
+    "@sentry/deno@10.32.1": {
+      "integrity": "sha512-pOWMtvFDQYAxbNmLgQw5ARpBBCPwRQd34kAaj+tBdhxjSsg32cVtjRpkXFIMkYth0DEbq6dLWEVL1Dgg11vlWA==",
+      "dependencies": [
+        "@opentelemetry/api",
+        "@sentry/core"
+      ]
+    },
     "lodash@4.17.21": {
       "integrity": "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
     },
@@ -287,6 +301,7 @@
       "jsr:@oak/oak@^17.2.0",
       "jsr:@std/crypto@*",
       "jsr:@std/encoding@*",
+      "npm:@sentry/deno@10.32.1",
       "npm:lodash@4.17.21"
     ]
   }
