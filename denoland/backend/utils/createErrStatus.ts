@@ -1,4 +1,4 @@
-import { FieldStatus } from './types.ts'
+import { FieldStatus } from "./types.ts";
 
 // deno-lint-ignore no-explicit-any
 export default function createErrStatus(message: string, status = 400): any {
@@ -6,5 +6,5 @@ export default function createErrStatus(message: string, status = 400): any {
     [FieldStatus]: status,
     message,
     ok: false,
-  }
+  };
 }

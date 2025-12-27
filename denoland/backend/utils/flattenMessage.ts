@@ -1,9 +1,9 @@
-import { MessageXKey } from './const.ts'
-import { dbGet } from './dbGet.ts'
-import kv from './kv.ts'
+import { MessageXKey } from "./const.ts";
+import { dbGet } from "./dbGet.ts";
+import kv from "./kv.ts";
 
 export default async function flattenMessages() {
-  const messages = await dbGet('Message')
+  const messages = await dbGet("Message");
   const flattenedMessages = messages
     .map((commu) =>
       commu.details.map((line) => ({
@@ -13,8 +13,8 @@ export default async function flattenMessages() {
         characterGroupId: commu.characterId,
       }))
     )
-    .reduce((a, b) => [...a, ...b])
+    .reduce((a, b) => [...a, ...b]);
 
-  await kv.del(MessageXKey)
-  await kv.put(MessageXKey, flattenedMessages)
+  await kv.del(MessageXKey);
+  await kv.put(MessageXKey, flattenedMessages);
 }
