@@ -9,33 +9,35 @@ import type { Filter } from 'mongodb'
 const IS_ONLY = { __isOnly: true }
 
 class Client {
-  #client: MongoClient
-  #db: Database | null = null
-  #dbName: string
+  static #db: Database | null = null
+  static #dbName: string
+  static #conn: string
 
-  constructor(conn: string, dbName: string) {
-    this.#client = new MongoClient(conn)
-    this.#dbName = dbName
+  static setup(conn: string, dbName: string) {
+    Client.#conn = conn
+    Client.#dbName = dbName
   }
 
-  getClient(): Promise<Database> {
+  static getClient(): Promise<Database> {
     return Sentry.startSpan(
       {
         name: 'kv-get-client',
       },
       async () => {
-        if (this.#db !== null) {
+        if (Client.#db !== null) {
           return this.#db
         }
 
-        this.#db = this.#client.db(this.#dbName)
-        return this.#db
+        const client = new MongoClient(Client.#conn)
+        const db = client.db(this.#dbName)
+        this.#db = db
+        return db
       }
     )
   }
 }
 
-const client = new Client(MONGODB_CONNECTION, MONGODB_DATABASE)
+Client.setup(MONGODB_CONNECTION, MONGODB_DATABASE)
 
 export function get<T extends keyof NaiveResourceMapping>(
   collectionName: T,
@@ -49,7 +51,7 @@ export function get<T extends keyof NaiveResourceMapping>(
       },
     },
     async () => {
-      const $ = await client.getClient()
+      const $ = await Client.getClient()
       return $.collection<UnArray<NaiveResourceMapping[T]>>(collectionName)
         .find(filter)
         .toArray()
@@ -72,7 +74,7 @@ export function put<T extends keyof NaiveResourceMapping>(
       if (filter.length === 0) {
         return 0
       }
-      const $ = await client.getClient()
+      const $ = await Client.getClient()
       return (await $.collection(collectionName).insertMany(filter))
         .insertedCount
     }
@@ -82,7 +84,7 @@ export function put<T extends keyof NaiveResourceMapping>(
 export async function del<T extends keyof NaiveResourceMapping>(
   collectionName: T
 ): Promise<void> {
-  const $ = await client.getClient()
+  const $ = await Client.getClient()
   await $.collection<UnArray<NaiveResourceMapping[T]>>(
     collectionName
   ).deleteMany({})
@@ -92,7 +94,7 @@ export async function delWithFilter<T extends keyof NaiveResourceMapping>(
   collectionName: T,
   filter: Filter<UnArray<NaiveResourceMapping[T]>>
 ): Promise<number> {
-  const $ = await client.getClient()
+  const $ = await Client.getClient()
   return await $.collection<UnArray<NaiveResourceMapping[T]>>(
     collectionName
   ).deleteMany(filter)
@@ -110,7 +112,7 @@ export function setValue<T extends (typeof NonExpandedKeys)[number]>(
       },
     },
     async () => {
-      const $ = await client.getClient()
+      const $ = await Client.getClient()
       await $.collection(key).updateOne(
         IS_ONLY,
         { $set: { value } },
@@ -129,7 +131,7 @@ export function getValue<T extends (typeof NonExpandedKeys)[number]>(
       attributes: { key },
     },
     async () => {
-      const $ = await client.getClient()
+      const $ = await Client.getClient()
       return $.collection(key)
         .findOne(IS_ONLY)
         .then((x) => x?.value ?? '')
@@ -149,7 +151,7 @@ export function aggregate<T extends keyof NaiveResourceMapping>(
       },
     },
     async () => {
-      const $ = await client.getClient()
+      const $ = await Client.getClient()
       return $.collection<UnArray<NaiveResourceMapping[T]>>(collectionName)
         .aggregate<UnArray<NaiveResourceMapping[T]>>(pipeline)
         .toArray()
