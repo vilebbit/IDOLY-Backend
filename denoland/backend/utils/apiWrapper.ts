@@ -1,3 +1,4 @@
+import * as Sentry from 'sentry'
 import jsonResponse, { notModifiedResponse } from '@utils/jsonResponse.ts'
 import ping from './ping.ts'
 import { FieldStatus } from './types.ts'
@@ -20,45 +21,57 @@ async function buildResponse(
   const req = ctx.request
   const remoteAddr = req.ip
   ping(req, remoteAddr).catch(console.log)
-  const url = req.url
-  const params = mergeSearchParams(url.searchParams)
-  const result = await f(params).catch((e) =>
-    typeof e === 'object' && FieldStatus in e
-      ? e
-      : {
-          ok: false,
-          message: String(e),
-          [FieldStatus]: 400,
-        }
-  )
-  let status = 200
-  if (FieldStatus in (result as ErrorWithStatus)) {
-    status = result[FieldStatus]
-  }
-  const hash = await crypto.subtle.digest(
-    'SHA-256',
-    new TextEncoder().encode(JSON.stringify(result))
-  )
-  const eTag = `"${encodeHex(hash)}"`
-  const commonCacheTags = {
-    ...(status === 200
-      ? {
-          'Cache-Control': 'public, max-age=3600, stale-while-revalidate=3600',
-          ETag: `W/${eTag}`,
-        }
-      : {}),
-  }
 
-  const reqETag = req.headers.get('If-None-Match')
-  if (reqETag) {
-    // Check ETag
-    if (reqETag.replace(/^W\//, '') === eTag.replace(/^W\//, '')) {
-      // ETag matches
-      return notModifiedResponse(commonCacheTags)
+  return Sentry.startSpan(
+    {
+      name: 'api-request',
+      attributes: {},
+    },
+    async (span) => {
+      const url = req.url
+      span.setAttribute('path', String(url))
+      const params = mergeSearchParams(url.searchParams)
+      const result = await f(params).catch((e) =>
+        typeof e === 'object' && FieldStatus in e
+          ? e
+          : {
+              ok: false,
+              message: String(e),
+              [FieldStatus]: 400,
+            }
+      )
+      let status = 200
+      if (FieldStatus in (result as ErrorWithStatus)) {
+        status = result[FieldStatus]
+      }
+      span.setAttribute('status', status)
+      const hash = await crypto.subtle.digest(
+        'SHA-256',
+        new TextEncoder().encode(JSON.stringify(result))
+      )
+      const eTag = `"${encodeHex(hash)}"`
+      const commonCacheTags = {
+        ...(status === 200
+          ? {
+              'Cache-Control':
+                'public, max-age=3600, stale-while-revalidate=3600',
+              ETag: `W/${eTag}`,
+            }
+          : {}),
+      }
+
+      const reqETag = req.headers.get('If-None-Match')
+      if (reqETag) {
+        // Check ETag
+        if (reqETag.replace(/^W\//, '') === eTag.replace(/^W\//, '')) {
+          // ETag matches
+          return notModifiedResponse(commonCacheTags)
+        }
+      }
+
+      return jsonResponse(result, commonCacheTags, status)
     }
-  }
-
-  return jsonResponse(result, commonCacheTags, status)
+  )
 }
 
 export function rawWrapper(f: (req: Request) => Promise<Response>) {
