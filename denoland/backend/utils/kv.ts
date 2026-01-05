@@ -18,13 +18,20 @@ class Client {
     this.#dbName = dbName
   }
 
-  async getClient(): Promise<Database> {
-    if (this.#db !== null) {
-      return this.#db
-    }
+  getClient(): Promise<Database> {
+    return Sentry.startSpan(
+      {
+        name: 'kv-get-client',
+      },
+      async () => {
+        if (this.#db !== null) {
+          return this.#db
+        }
 
-    this.#db = this.#client.db(this.#dbName)
-    return this.#db
+        this.#db = this.#client.db(this.#dbName)
+        return this.#db
+      }
+    )
   }
 }
 
