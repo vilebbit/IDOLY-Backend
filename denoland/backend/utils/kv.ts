@@ -1,3 +1,4 @@
+import * as Sentry from 'sentry'
 import { NonExpandedKeys } from './const.ts'
 import type { NaiveResourceMapping, UnArray } from './types.ts'
 import { MONGODB_CONNECTION, MONGODB_DATABASE } from '@utils/env.ts'
@@ -29,25 +30,46 @@ class Client {
 
 const client = new Client(MONGODB_CONNECTION, MONGODB_DATABASE)
 
-export async function get<T extends keyof NaiveResourceMapping>(
+export function get<T extends keyof NaiveResourceMapping>(
   collectionName: T,
   filter: Filter<UnArray<NaiveResourceMapping[T]>> = {}
 ): Promise<UnArray<NaiveResourceMapping[T]>[]> {
-  const $ = await client.getClient()
-  return $.collection<UnArray<NaiveResourceMapping[T]>>(collectionName)
-    .find(filter)
-    .toArray()
+  return Sentry.startSpan(
+    {
+      name: 'kv-get',
+      attributes: {
+        collectionName,
+      },
+    },
+    async () => {
+      const $ = await client.getClient()
+      return $.collection<UnArray<NaiveResourceMapping[T]>>(collectionName)
+        .find(filter)
+        .toArray()
+    }
+  )
 }
 
-export async function put<T extends keyof NaiveResourceMapping>(
+export function put<T extends keyof NaiveResourceMapping>(
   collectionName: T,
   filter: UnArray<NaiveResourceMapping[T]>[]
 ): Promise<number> {
-  if (filter.length === 0) {
-    return 0
-  }
-  const $ = await client.getClient()
-  return (await $.collection(collectionName).insertMany(filter)).insertedCount
+  return Sentry.startSpan(
+    {
+      name: 'kv-put',
+      attributes: {
+        collectionName,
+      },
+    },
+    async () => {
+      if (filter.length === 0) {
+        return 0
+      }
+      const $ = await client.getClient()
+      return (await $.collection(collectionName).insertMany(filter))
+        .insertedCount
+    }
+  )
 }
 
 export async function del<T extends keyof NaiveResourceMapping>(
@@ -69,35 +91,63 @@ export async function delWithFilter<T extends keyof NaiveResourceMapping>(
   ).deleteMany(filter)
 }
 
-export async function setValue<T extends (typeof NonExpandedKeys)[number]>(
+export function setValue<T extends (typeof NonExpandedKeys)[number]>(
   key: T,
   value: string
 ): Promise<void> {
-  const $ = await client.getClient()
-  await $.collection(key).updateOne(
-    IS_ONLY,
-    { $set: { value } },
-    { upsert: true }
+  return Sentry.startSpan(
+    {
+      name: 'kv-set',
+      attributes: {
+        key,
+      },
+    },
+    async () => {
+      const $ = await client.getClient()
+      await $.collection(key).updateOne(
+        IS_ONLY,
+        { $set: { value } },
+        { upsert: true }
+      )
+    }
   )
 }
 
-export async function getValue<T extends (typeof NonExpandedKeys)[number]>(
+export function getValue<T extends (typeof NonExpandedKeys)[number]>(
   key: T
 ): Promise<string> {
-  const $ = await client.getClient()
-  return $.collection(key)
-    .findOne(IS_ONLY)
-    .then((x) => x?.value ?? '')
+  return Sentry.startSpan(
+    {
+      name: 'kv-get-value',
+      attributes: { key },
+    },
+    async () => {
+      const $ = await client.getClient()
+      return $.collection(key)
+        .findOne(IS_ONLY)
+        .then((x) => x?.value ?? '')
+    }
+  )
 }
 
-export async function aggregate<T extends keyof NaiveResourceMapping>(
+export function aggregate<T extends keyof NaiveResourceMapping>(
   collectionName: T,
   pipeline: AggregatePipeline<NaiveResourceMapping[T]>[]
 ): Promise<UnArray<NaiveResourceMapping[T]>[]> {
-  const $ = await client.getClient()
-  return $.collection<UnArray<NaiveResourceMapping[T]>>(collectionName)
-    .aggregate<UnArray<NaiveResourceMapping[T]>>(pipeline)
-    .toArray()
+  return Sentry.startSpan(
+    {
+      name: 'kv-aggregate',
+      attributes: {
+        collectionName,
+      },
+    },
+    async () => {
+      const $ = await client.getClient()
+      return $.collection<UnArray<NaiveResourceMapping[T]>>(collectionName)
+        .aggregate<UnArray<NaiveResourceMapping[T]>>(pipeline)
+        .toArray()
+    }
+  )
 }
 
 export default {
