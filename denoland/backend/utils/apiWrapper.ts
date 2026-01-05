@@ -69,7 +69,14 @@ async function buildResponse(
         }
       }
 
-      return jsonResponse(result, commonCacheTags, status)
+      return jsonResponse(
+        result,
+        {
+          ...commonCacheTags,
+          'X-Sentry-Ref': span.spanContext().traceId,
+        },
+        status
+      )
     }
   )
 }
