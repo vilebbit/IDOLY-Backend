@@ -35,10 +35,6 @@ async function buildResponse(
   if (FieldStatus in (result as ErrorWithStatus)) {
     status = result[FieldStatus]
   }
-  // const lastUpdate = await kv
-  //   .getValue(UpdateTimeKey)
-  //   .then((x) => new Date(x).toUTCString())
-  //   .catch((_) => undefined)
   const hash = await crypto.subtle.digest(
     'SHA-256',
     new TextEncoder().encode(JSON.stringify(result))
@@ -51,7 +47,6 @@ async function buildResponse(
           ETag: `W/${eTag}`,
         }
       : {}),
-    // ...(lastUpdate ? { 'Last-Modified': lastUpdate } : {}),
   }
 
   const reqETag = req.headers.get('If-None-Match')
@@ -62,20 +57,6 @@ async function buildResponse(
       return notModifiedResponse(commonCacheTags)
     }
   }
-
-  // const reqDateStr = req.headers.get('If-Modified-Since')
-  // if (
-  //   reqDateStr &&
-  //   !Number.isNaN(new Date(reqDateStr).getDate()) &&
-  //   lastUpdate
-  // ) {
-  //   // Check lastUpdate
-  //   const reqDate = new Date(reqDateStr)
-  //   if (Number(lastUpdate) <= Number(reqDate)) {
-  //     // Update later
-  //     return notModifiedResponse(commonCacheTags)
-  //   }
-  // }
 
   return jsonResponse(result, commonCacheTags, status)
 }
