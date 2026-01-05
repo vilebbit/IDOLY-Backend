@@ -48,7 +48,6 @@ for await (const route of routes_path) {
   name = name.endsWith('/') && name.length > 1 ? name.slice(0, -1) : name
 
   IMPORTS.push(`import { handler as $${i} } from "./${route.path}"`)
-  console.log(`"${name}": $${i}`)
   ROUTES.push(`"${name}": $${i}`)
 
   i++

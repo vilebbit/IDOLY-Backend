@@ -1,6 +1,6 @@
 import { Application, Router } from '@oak/oak'
 import * as Sentry from 'sentry'
-import manifest, { ROUTES } from './routes.ts'
+import manifest from './routes.ts'
 import checkEnv from '@utils/checkEnv.ts'
 import { isDevelopEnv, SENTRY_DSN } from './utils/env.ts'
 
@@ -16,8 +16,6 @@ const router = new Router()
 Object.entries(manifest.routes).map(([name, routes]) =>
   router.all(name, routes)
 )
-
-console.log(router.routes())
 
 app.use(router.routes())
 app.use(router.allowedMethods())
