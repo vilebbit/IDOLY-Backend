@@ -5,6 +5,7 @@ import { FieldStatus } from './types.ts'
 import { ErrorWithStatus } from './types.ts'
 import { encodeHex } from 'encoding/hex'
 import { Context } from '@oak/oak'
+import type { Request as OakRequest } from '@oak/oak'
 
 function mergeSearchParams(sp: URLSearchParams): Record<string, string> {
   const ret: Record<string, string> = {}
@@ -81,9 +82,9 @@ async function buildResponse(
   )
 }
 
-export function rawWrapper(f: (req: Request) => Promise<Response>) {
+export function rawWrapper(f: (req: OakRequest) => Promise<Response>) {
   return async function handler(ctx: Context) {
-    const response = await f(ctx.request as unknown as Request)
+    const response = await f(ctx.request)
     ctx.response.status = response.status
     ctx.response.body = response.body
     ctx.response.headers = response.headers

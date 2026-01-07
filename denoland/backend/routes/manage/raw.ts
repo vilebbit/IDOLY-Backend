@@ -1,3 +1,4 @@
+import type { Request as OakRequest } from '@oak/oak'
 import { errorResponse } from '@utils/jsonResponse.ts'
 import { isReadonly } from '@utils/requirePermission.ts'
 import kv from '@utils/kv.ts'
@@ -9,7 +10,7 @@ import { rawWrapper } from '@utils/apiWrapper.ts'
  *
  * Authorization: Bearer [ADMINISTRATION/READONLY TOKEN]
  */
-async function _handler(req: Request): Promise<Response> {
+async function _handler(req: OakRequest): Promise<Response> {
   if (!isReadonly(req)) {
     return errorResponse('Unauthorized', 403)
   }
@@ -20,9 +21,9 @@ async function _handler(req: Request): Promise<Response> {
       status: 400,
     })
   }
-  const val = NonExpandedKeys.includes(key)
-    ? await kv.getValue(key)
-    : JSON.stringify(await kv.get(key))
+  const val = NonExpandedKeys.includes(key as any)
+    ? await kv.getValue(key as any)
+    : JSON.stringify(await kv.get(key as any))
   return new Response(val, {
     headers: {
       'Content-Type': 'application/json',

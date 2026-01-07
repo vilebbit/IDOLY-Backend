@@ -1,3 +1,4 @@
+import type { Request as OakRequest } from '@oak/oak'
 import { errorResponse } from '@utils/jsonResponse.ts'
 import { isReadonly } from '@utils/requirePermission.ts'
 import { dbGet } from '@utils/dbGet.ts'
@@ -8,7 +9,7 @@ import { rawWrapper } from '@utils/apiWrapper.ts'
  *
  * Authorization: Bearer [ADMINISTRATION/READONLY TOKEN]
  */
-async function _handler(req: Request): Promise<Response> {
+async function _handler(req: OakRequest): Promise<Response> {
   if (!isReadonly(req)) {
     return errorResponse('Unauthorized', 403)
   }

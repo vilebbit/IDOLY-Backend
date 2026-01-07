@@ -1,3 +1,4 @@
+import type { Request as OakRequest } from '@oak/oak'
 import jsonResponse, { errorResponse } from '@utils/jsonResponse.ts'
 import { isAdmin } from '@utils/requirePermission.ts'
 import kv from '@utils/kv.ts'
@@ -15,11 +16,11 @@ import { rawWrapper } from '@utils/apiWrapper.ts'
  *     type: array (default) | value
  * }
  */
-async function _handler(req: Request): Promise<Response> {
+async function _handler(req: OakRequest): Promise<Response> {
   if (!isAdmin(req)) {
     return errorResponse('Unauthorized', 403)
   }
-  const json: Record<string, string> = await req.json?.()
+  const json: Record<string, string> = await req.body.json()
   if (!json.key || !json.value) {
     return new Response('No key or value found', {
       status: 400,
