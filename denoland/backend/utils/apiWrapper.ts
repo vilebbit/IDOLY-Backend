@@ -6,6 +6,7 @@ import { ErrorWithStatus } from './types.ts'
 import { encodeHex } from 'encoding/hex'
 import { Context } from '@oak/oak'
 import type { Request as OakRequest } from '@oak/oak'
+import env from './env.ts'
 
 function mergeSearchParams(sp: URLSearchParams): Record<string, string> {
   const ret: Record<string, string> = {}
@@ -75,6 +76,7 @@ async function buildResponse(
         {
           ...commonCacheTags,
           'X-Sentry-Ref': span.spanContext().traceId,
+          'X-Instance-Id': env.BACKEND_INSTANCE_ID,
         },
         status
       )

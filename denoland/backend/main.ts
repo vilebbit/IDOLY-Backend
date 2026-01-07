@@ -2,13 +2,14 @@ import { Application, Router } from '@oak/oak'
 import * as Sentry from 'sentry'
 import manifest from './routes.ts'
 import checkEnv from '@utils/checkEnv.ts'
-import { isDevelopEnv, SENTRY_DSN } from './utils/env.ts'
+import env, { isDevelopEnv, SENTRY_DSN } from './utils/env.ts'
 
 checkEnv()
 Sentry.init({
   dsn: SENTRY_DSN,
   tracesSampleRate: isDevelopEnv ? 1.0 : 0.2,
 })
+Sentry.setTag('machine', env.BACKEND_INSTANCE_ID)
 
 const app = new Application()
 const router = new Router()
