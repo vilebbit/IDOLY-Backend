@@ -11,9 +11,13 @@ const responder: APIMapping['Card/List'] = async ({
   rarity: _rarity,
 }) => {
   const [cards, cardParam, cardRarity] = await Promise.all([
-    dbGet('Card', {
-      ...filterByReleaseDate(),
-    }),
+    dbGet(
+      'Card',
+      {
+        ...filterByReleaseDate(),
+      },
+      true
+    ),
     dbGet('CardParameter'),
     dbGet('CardRarity'),
   ])

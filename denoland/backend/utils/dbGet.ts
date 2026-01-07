@@ -17,7 +17,8 @@ function isNonExpandedKey(
  */
 export function dbGet<T extends AcceptableDbKey>(
   s: T,
-  filter: Filter<UnArray<ResourceMapping[T]>> = {}
+  filter: Filter<UnArray<ResourceMapping[T]>> = {},
+  forceCache = false
 ): Promise<ResourceMapping[T]> {
   return Sentry.startSpan(
     {
@@ -32,21 +33,24 @@ export function dbGet<T extends AcceptableDbKey>(
         return JSON.parse(result)
       }
 
-      // If no filter is applied, try to get from cache
-      if (Object.keys(filter).length === 0) {
+      const useCache = Object.keys(filter).length === 0 || forceCache
+      span.setAttribute('useCache', useCache)
+
+      if (useCache) {
         const cached = await getCache<ResourceMapping[T]>(s)
         if (cached) {
           const endAt = performance.now()
           span.setAttribute('dbRequestTime', endAt - startAt)
           span.setAttribute('cacheHit', true)
           return cached
+        } else {
+          span.setAttribute('cacheHit', false)
         }
       }
 
       const result = await kv.get(s, filter)
 
-      // If no filter is applied, set cache
-      if (Object.keys(filter).length === 0) {
+      if (useCache) {
         await setCache(s, result)
       }
 
