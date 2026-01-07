@@ -1,11 +1,13 @@
 import type { APIMapping } from 'hoshimi-types/'
 import { dbGet } from '@utils/dbGet.ts'
 import apiWrapper from '@utils/apiWrapper.ts'
-import filterRelease from '@utils/filterRelease.ts'
 import uniq from 'lodash/uniq.js'
+import { filterByReleaseDate } from '@utils/filter.ts'
 
 const responder: APIMapping['Card/Id'] = async () => {
-  const cards = await dbGet('Card').then(filterRelease)
+  const cards = await dbGet('Card', {
+    ...filterByReleaseDate(),
+  })
   const charIds = uniq(cards.map((x) => x.characterId))
   const ret: Record<
     string,
