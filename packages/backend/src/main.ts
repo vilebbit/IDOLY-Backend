@@ -18,7 +18,7 @@ const port = 8000
 app.use(express.static('./static'))
 app.use(
   express.json({
-    limit: '2mb',
+    limit: '80mb',
     type: () => true,
   })
 )
