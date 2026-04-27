@@ -19,6 +19,7 @@ app.use(express.static('./static'))
 app.use(
   express.json({
     limit: '2mb',
+    type: () => true,
   })
 )
 
