@@ -5,11 +5,22 @@
   "main": "index.js",
   "scripts": {
     "check:types": "tsc --noEmit",
+    "build": "esbuild src/main.ts --platform=node --bundle --outfile=dist/main.js",
+    "start": "node dist/main.js",
     "dev": "node -r esbuild-register ./src/main.ts"
   },
   "keywords": [],
+  "files": [
+    "dist",
+    "static",
+    "package.json",
+    "README.md"
+  ],
   "author": "Outvi V <npm@outv.im>",
   "license": "AGPL-3.0-only",
+  "engines": {
+    "node": ">= 20.*"
+  },
   "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@sentry/node": "^10.50.0",
@@ -23,6 +34,7 @@
     "@types/express": "^5.0.6",
     "@types/lodash": "^4.17.24",
     "@types/node": "^25.6.0",
+    "esbuild": "0.28.0",
     "esbuild-register": "^3.6.0",
     "typescript": "^5.7.3"
   }

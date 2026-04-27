@@ -144,6 +144,3 @@ solis/client_cache.json
 solis/*.crt
 solis/*.key
 dump.cs
-
-# types
-packages/types/denodist

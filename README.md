@@ -10,16 +10,13 @@ This repository is a [monorepo](https://en.wikipedia.org/wiki/Monorepo) for all 
 
 ### Non-publishing packages (Node)
 
+* [`@hoshimi/backend`](packages/backend)
 * [`@hoshimi/parser`](packages/parser)
 * [`@hoshimi/validator`](packages/validator)
 
 ### Published packages (Node)
 
 * [`hoshimi-types`](packages/types)
-
-### Projects (Deno)
-
-* [backend](denoland/backend)
 
 ## Scripts
 

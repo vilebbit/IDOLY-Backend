@@ -4,6 +4,7 @@ import apiWrapper from '@utils/apiWrapper'
 import { parseMultiString } from '@utils/parse'
 import pick from 'lodash/pick'
 
+// @ts-expect-error TODO: fix
 const responder: APIMapping['Character'] = async ({ ids: _ids }) => {
   const ids = parseMultiString(_ids)
   const ch = await dbGet('Character')

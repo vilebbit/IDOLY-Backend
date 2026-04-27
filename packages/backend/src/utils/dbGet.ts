@@ -48,6 +48,7 @@ export function dbGet<T extends AcceptableDbKey>(
         }
       }
 
+      // @ts-expect-error TODO: fix
       const result = await kv.get(s, filter)
 
       if (useCache) {

@@ -1,8 +1,8 @@
-import { Octokit } from 'octokit'
 import { OctoObservedKey } from './const'
 import { dbGet } from './dbGet'
 import { GHREPO_ADV, GHTOKEN_ADV } from './env'
 import kv from './kv'
+const { Octokit } = require('octokit')
 
 const octokit = new Octokit({
   auth: GHTOKEN_ADV,
