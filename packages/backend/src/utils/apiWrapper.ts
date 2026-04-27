@@ -5,6 +5,7 @@ import { FieldStatus } from './types'
 import { ErrorWithStatus } from './types'
 import { Request, Response as ExpressResponse } from 'express'
 import env from './env'
+import getOriginalUrl from './getOriginalUrl'
 
 function mergeSearchParams(params: any): Record<string, string> {
   const ret: Record<string, string> = {}
@@ -27,7 +28,7 @@ async function buildResponse(
       attributes: {},
     },
     async (span: any) => {
-      const url = req.originalUrl
+      const url = getOriginalUrl(req)
       span.setAttribute('path', String(url))
       const params = mergeSearchParams(req.query)
       const result = await f(params).catch((e) =>

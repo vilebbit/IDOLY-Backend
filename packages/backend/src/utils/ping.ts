@@ -5,12 +5,13 @@ import {
   MATOMO_TOKEN,
   MATOMO_WEBSITE_ID,
 } from './env'
+import getOriginalUrl from './getOriginalUrl'
 
 export default async function ping(
   req: Request,
   remoteAddr: string
 ): Promise<void> {
-  const requestUrl = new URL(req.url)
+  const requestUrl = getOriginalUrl(req)
   const pingUrl = new URL(`https://${MATOMO_DOMAIN}/matomo.php`)
   const payload = {
     idsite: MATOMO_WEBSITE_ID,
