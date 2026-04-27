@@ -1,0 +1,29 @@
+{
+  "name": "@hoshimi/backend",
+  "version": "2.0.0",
+  "description": "Backend for info pride.",
+  "main": "index.js",
+  "scripts": {
+    "check:types": "tsc --noEmit",
+    "dev": "node -r esbuild-register ./src/main.ts"
+  },
+  "keywords": [],
+  "author": "Outvi V <npm@outv.im>",
+  "license": "AGPL-3.0-only",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "@sentry/node": "^10.50.0",
+    "express": "^5.2.1",
+    "hoshimi-types": "link:../types",
+    "lodash": "^4.17.21",
+    "mongodb": "^7.2.0",
+    "octokit": "^5.0.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^25.6.0",
+    "esbuild-register": "^3.6.0",
+    "typescript": "^5.7.3"
+  }
+}
