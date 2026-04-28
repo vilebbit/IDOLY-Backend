@@ -34,7 +34,7 @@ jobs:
           context: .
           push: true
           target: backend
-          tags: ghcr.io/{{ github.repository_owner }}/idoly-backend:latest
+          tags: ghcr.io/${{ github.repository_owner }}/idoly-backend:latest
 
       - name: Install cosign
         uses: sigstore/cosign-installer@faadad0cce49287aee09b3a48701e75088a2c6ad # v4.0.0
@@ -44,4 +44,4 @@ jobs:
           COSIGN_EXPERIMENTAL: "1"
         run: |
           cosign version
-          cosign sign "ghcr.io/{{ github.repository_owner }}/idoly-backend@${{ steps.build.outputs.digest }}"
+          cosign sign "ghcr.io/${{ github.repository_owner }}/idoly-backend@${{ steps.build.outputs.digest }}"
