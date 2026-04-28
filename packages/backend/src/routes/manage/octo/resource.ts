@@ -3,6 +3,7 @@ import { errorResponse } from '@utils/jsonResponse'
 import { isReadonly } from '@utils/requirePermission'
 import { dbGet } from '@utils/dbGet'
 import { rawWrapper } from '@utils/apiWrapper'
+import getOriginalUrl from '@utils/getOriginalUrl'
 
 /**
  * GET /manage/octo/resource?name=
@@ -13,7 +14,7 @@ async function _handler(req: Request): Promise<Response> {
   if (!isReadonly(req)) {
     return errorResponse('Unauthorized', 403)
   }
-  const url = new URL(req.url)
+  const url = getOriginalUrl(req)
   const name = url.searchParams.get('name')
   if (!name) {
     return new Response('ID should be string', {

@@ -4,6 +4,7 @@ import { isReadonly } from '@utils/requirePermission'
 import kv from '@utils/kv'
 import { NonExpandedKeys } from '@utils/const'
 import { rawWrapper } from '@utils/apiWrapper'
+import getOriginalUrl from '@utils/getOriginalUrl'
 
 /**
  * GET /manage/raw?key=name
@@ -14,7 +15,7 @@ async function _handler(req: Request): Promise<Response> {
   if (!isReadonly(req)) {
     return errorResponse('Unauthorized', 403)
   }
-  const url = new URL(req.url)
+  const url = getOriginalUrl(req)
   const key = url.searchParams.get('key')
   if (!key) {
     return new Response('Key should be string', {
