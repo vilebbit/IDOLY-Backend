@@ -1,18 +1,22 @@
 name: Build
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        package: [types]
-    if: "(!contains(github.event.commits[0].message, '[skip ci]')) && (!contains(github.event.commits[0].message, '[ci skip]'))"
+        package:
+          - backend
+          - types
+          - parser
+    if: "(!contains(github.event.commits[0].message, '[skip ci]')) &&
+      (!contains(github.event.commits[0].message, '[ci skip]'))"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
 
@@ -21,5 +25,5 @@ jobs:
 
       - name: Build 🔧
         run: |
-          cd packages/${{matrix.package}}
+          cd packages/${{ matrix.package }}
           npx pnpm@8 run build
