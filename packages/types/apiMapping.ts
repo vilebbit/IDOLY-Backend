@@ -9,6 +9,7 @@ import type {
   Emblem,
   EventStory,
   EventStoryEpisode,
+  ExtraStory,
   Gacha,
   Hair,
   LiveAbility,
@@ -255,6 +256,14 @@ export type APIMapping = {
   Story: InputAndOutput<
     { id: string },
     Pick<Story, 'name' | 'id' | 'sectionName' | 'description' | 'advAssetIds'>
+  >
+  'Story/Extra': OnlyOutput<
+    (Pick<ExtraStory, 'id' | 'assetId' | 'name' | 'description' | 'order'> & {
+      episodes: Omit<
+        ExtraStory['episodes'][number],
+        'viewConditionId' | 'unlockConditionId'
+      >[]
+    })[]
   >
   'Story/Reverse': InputAndOutput<{ advAssetId: string }, { id: string }>
   Version: OnlyOutput<{

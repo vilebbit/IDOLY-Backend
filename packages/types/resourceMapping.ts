@@ -11,6 +11,7 @@ import type {
   CostumeType,
   Emblem,
   EventStory,
+  ExtraStory,
   Gacha,
   Hair,
   LiveAbility,
@@ -44,6 +45,7 @@ export type ResourceMapping = {
   CostumeType: CostumeType[]
   Emblem: Emblem[]
   EventStory: EventStory[]
+  ExtraStory: ExtraStory[]
   Gacha: Gacha[]
   Hair: Hair[]
   LiveAbility: LiveAbility[]
