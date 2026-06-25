@@ -23,7 +23,7 @@ class Kv {
 }
 
 const kv = new Kv()
-const ONE_HOUR = 1000 * 60 * 60
+const ONE_HOUR = 60 * 60
 
 export async function getCache<T>(key: string): Promise<T | null> {
   const res = await kv.get(key)
