@@ -29,8 +29,30 @@ import type {
   StoryPart,
 } from './ProtoMaster'
 
-import { OctoData } from './octoData'
 import { CommuX, MessageX } from './types'
+
+type AssetBundle = {
+  crc: number
+  generation: string
+  id: number
+  md5: string
+  name: string
+  objectName: string
+  size: number
+  state: string
+  type: string
+  uploadVersionId: number
+}
+
+type Resource = {
+  id: number
+  name: string
+  size: number
+  md5: string
+  objectName: string
+  generation: string
+  uploadVersionId: number
+}
 
 export type ResourceMapping = {
   ActivityAbility: ActivityAbility[]
@@ -54,12 +76,11 @@ export type ResourceMapping = {
   MessageGroup: MessageGroup[]
   Music: Music[]
   MusicChartPattern: MusicChartPattern[]
-  Notice: {
-    notices: NoticeInfo[]
-    malfunctionNotices: NoticeInfo[]
-    prNotices: NoticeInfo[]
-  }
-  Octo: OctoData
+  Notice_notices: NoticeInfo[]
+  Notice_malfunctionNotices: NoticeInfo[]
+  Notice_prNotices: NoticeInfo[]
+  Octo_assetBundleList: AssetBundle[]
+  Octo_resourceList: Resource[]
   PhotoAbility: PhotoAbility[]
   PhotoAbilitySet: PhotoAbilitySet[]
   PhotoAbilityTarget: PhotoAbilityTarget[]
