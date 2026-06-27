@@ -16,6 +16,7 @@ const responder: APIMapping['Card/List'] = async ({
       {
         ...filterByReleaseDate(),
       },
+      undefined,
       true
     ),
     dbGet('CardParameter'),

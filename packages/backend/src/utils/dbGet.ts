@@ -12,14 +12,32 @@ function isNonExpandedKey(
   return NonExpandedKeys.includes(key as (typeof NonExpandedKeys)[number])
 }
 
+function toProjectObject<RowNames extends number | string | symbol>(
+  projectedRows: readonly RowNames[]
+) {
+  const ret: Partial<Record<RowNames, 1>> = {}
+  for (const row of projectedRows) {
+    ret[row] = 1
+  }
+  return ret
+}
+
 /**
  * Use MongoDB-based operation API if possible.
  */
-export function dbGet<T extends AcceptableDbKey>(
+export function dbGet<
+  T extends AcceptableDbKey,
+  AllowedRows extends (keyof UnArray<ResourceMapping[T]>)[] | undefined,
+>(
   s: T,
   filter: Filter<UnArray<ResourceMapping[T]>> = {},
+  onlyIncludedRows?: AllowedRows,
   forceCache = false
-): Promise<ResourceMapping[T]> {
+): Promise<
+  AllowedRows extends readonly (keyof UnArray<ResourceMapping[T]>)[]
+    ? Array<Pick<UnArray<ResourceMapping[T]>, AllowedRows[number]>>
+    : ResourceMapping[T]
+> {
   return Sentry.startSpan(
     {
       name: 'db-get',
@@ -48,8 +66,10 @@ export function dbGet<T extends AcceptableDbKey>(
         }
       }
 
-      // @ts-expect-error TODO: fix
-      const result = await kv.get(s, filter)
+      const projectObject = onlyIncludedRows
+        ? toProjectObject<keyof UnArray<ResourceMapping[T]>>(onlyIncludedRows)
+        : undefined
+      const result = await kv.get(s, filter, projectObject)
 
       if (useCache) {
         await setCache(s, result)

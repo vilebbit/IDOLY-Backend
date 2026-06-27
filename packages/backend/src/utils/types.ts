@@ -1,6 +1,6 @@
 import type { ResourceMapping } from 'hoshimi-types'
 import type { RequestHandler } from 'express'
-import type { NonExpandedKeys } from './const'
+import type { MetadataKeys } from './const'
 
 export type UnwrapPromise<T> = T extends Promise<infer U> ? U : never
 
@@ -8,7 +8,7 @@ export type UnArray<T> = T extends (infer R)[] ? R : never
 
 export type NaiveResourceMapping = Omit<
   ResourceMapping,
-  (typeof NonExpandedKeys)[number]
+  (typeof MetadataKeys)[number]
 >
 
 export const FieldStatus = Symbol('Status')

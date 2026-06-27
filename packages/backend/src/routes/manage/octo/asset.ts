@@ -21,14 +21,17 @@ async function _handler(req: Request): Promise<Response> {
       status: 400,
     })
   }
-  const octoDb = await dbGet('Octo')
-  const item = octoDb.assetBundleList.filter((x) => x.name === name)?.[0]
-  if (!item) {
+  const items = await dbGet('Octo_assetBundleList', {
+    name: {
+      $eq: name,
+    },
+  })
+  if (!items.length) {
     return new Response(`Asset not found: ${name}`, {
       status: 404,
     })
   }
-  return new Response(JSON.stringify(item), {
+  return new Response(JSON.stringify(items[0]), {
     headers: {
       'Content-Type': 'application/json',
     },
