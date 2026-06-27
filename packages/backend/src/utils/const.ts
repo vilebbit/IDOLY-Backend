@@ -12,12 +12,9 @@ export const CommuXSearchIndex = 's-commux'
 export const MessageXKey = 'MessageX'
 export const MessageXSearchIndex = 's-messagex'
 
-export const NonExpandedKeys = [
-  'Notice',
-  'Octo',
-  UpdateTimeKey,
-  OctoObservedKey,
-] as const
+export const SplitStoreKeys = ['Notice', 'Octo']
+export const MetadataKeys = [UpdateTimeKey, OctoObservedKey]
+export const NonExpandedKeys = [...MetadataKeys, ...SplitStoreKeys]
 
 export const XXHashSeed = 0xe2d09373
 

@@ -27,7 +27,8 @@ async function getDb() {
 
 export function get<T extends keyof NaiveResourceMapping>(
   collectionName: T,
-  filter: Filter<UnArray<NaiveResourceMapping[T]>> = {}
+  filter: Filter<UnArray<NaiveResourceMapping[T]>> = {},
+  project?: Partial<Record<keyof UnArray<NaiveResourceMapping[T]>, 1 | 0>>
 ): Promise<UnArray<NaiveResourceMapping[T]>[]> {
   return Sentry.startSpan(
     {
@@ -38,9 +39,13 @@ export function get<T extends keyof NaiveResourceMapping>(
     },
     async () => {
       const $ = await getDb()
-      return (await $.collection<any>(collectionName as string)
-        .find(filter as any)
-        .toArray()) as unknown as UnArray<NaiveResourceMapping[T]>[]
+      let ptr = await $.collection<any>(collectionName as string).find(
+        filter as any
+      )
+      if (project !== undefined) {
+        ptr = ptr.project(project)
+      }
+      return ptr.toArray() as unknown as UnArray<NaiveResourceMapping[T]>[]
     }
   )
 }
