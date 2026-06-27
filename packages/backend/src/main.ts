@@ -26,16 +26,7 @@ app.use(
 Object.entries(manifest.routes).forEach(([path, handler]) => {
   app.all(path, async (req, res, next) => {
     try {
-      const result = await handler(req, res, next)
-      if (result instanceof Response) {
-        // Convert Web Response to Express response
-        res.status(result.status)
-        result.headers.forEach((value, key) => {
-          res.setHeader(key, value)
-        })
-        const body = await result.text()
-        res.send(body)
-      }
+      await handler(req, res)
     } catch (error) {
       next(error)
     }
