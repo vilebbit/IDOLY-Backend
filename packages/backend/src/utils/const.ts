@@ -15,7 +15,6 @@ export const MessageXSearchIndex = 's-messagex'
 export const NonExpandedKeys = [
   'Notice',
   'Octo',
-  'Skillx',
   UpdateTimeKey,
   OctoObservedKey,
 ] as const
