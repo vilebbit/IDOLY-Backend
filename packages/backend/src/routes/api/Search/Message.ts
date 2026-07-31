@@ -3,10 +3,16 @@ import { dbAggregate } from '@utils/dbGet'
 import apiWrapper from '@utils/apiWrapper'
 import { MessageXKey, MessageXSearchIndex } from '@utils/const'
 
-const responder: APIMapping['Search/Message'] = async ({ q }) => {
+const responder: APIMapping['Search/Message'] = async ({
+  q,
+  characterId }) => {
   if (!q) {
     return []
   }
+  const matchStage: Record<string, { $eq: string }> | {} = characterId
+    ? { characterId: { $eq: characterId } }
+    : {}
+
   const results = await dbAggregate(MessageXKey, [
     {
       $search: {
@@ -19,6 +25,9 @@ const responder: APIMapping['Search/Message'] = async ({ q }) => {
         },
       },
     },
+    ...(Object.keys(matchStage).length > 0
+      ? [{ $match: matchStage }]
+      : []),
     {
       $limit: 30,
     },

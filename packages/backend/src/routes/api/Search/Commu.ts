@@ -3,10 +3,16 @@ import { dbAggregate } from '@utils/dbGet'
 import apiWrapper from '@utils/apiWrapper'
 import { CommuXKey, CommuXSearchIndex } from '@utils/const'
 
-const responder: APIMapping['Search/Commu'] = async ({ q }) => {
+const responder: APIMapping['Search/Commu'] = async ({
+  q,
+  characterName }) => {
   if (!q) {
     return []
   }
+  const matchStage: Record<string, { $eq: string }> | {} = characterName
+    ? { name: { $eq: characterName } }
+    : {}
+
   const results = await dbAggregate(CommuXKey, [
     {
       $search: {
@@ -19,6 +25,9 @@ const responder: APIMapping['Search/Commu'] = async ({ q }) => {
         },
       },
     },
+    ...(Object.keys(matchStage).length > 0
+      ? [{ $match: matchStage }]
+      : []),
     {
       $limit: 30,
     },

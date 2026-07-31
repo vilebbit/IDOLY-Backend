@@ -168,8 +168,8 @@ export type APIMapping = {
   EventStory: InputAndOutput<
     { id: string },
     | (Pick<EventStory, 'id' | 'name' | 'description' | 'order' | 'assetId'> & {
-        episodes: Pick<EventStoryEpisode, 'episode' | 'storyId'>[]
-      })
+      episodes: Pick<EventStoryEpisode, 'episode' | 'storyId'>[]
+    })
     | null
   >
   'EventStory/List': OnlyOutput<
@@ -240,10 +240,14 @@ export type APIMapping = {
   'Search/Commu': InputAndOutput<
     {
       q: string
+      characterName?: string
     },
     CommuX[]
   >
-  'Search/Message': InputAndOutput<{ q: string }, MessageX[]>
+  'Search/Message': InputAndOutput<
+    { q: string; characterId?: string },
+    MessageX[]
+  >
   Skill: InputAndOutput<
     {
       ids: MultiString
