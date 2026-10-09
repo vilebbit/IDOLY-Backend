@@ -4,12 +4,27 @@ import kv from './kv'
 import { UnArray } from './types'
 import { Filter } from 'mongodb'
 import { getCache, setCache } from './cache'
+import { MEMORY_CACHE_SECONDS } from './cachePolicy'
 import type { AcceptableDbKey, ResourceMapping } from 'hoshimi-types'
 
 function isNonExpandedKey(
   key: string
 ): key is (typeof NonExpandedKeys)[number] {
   return NonExpandedKeys.includes(key as (typeof NonExpandedKeys)[number])
+}
+
+function stableCacheFragment(value: unknown): string {
+  return (
+    JSON.stringify(value, (_key, item) => {
+      if (item instanceof Date) {
+        const bucket = Math.floor(
+          item.getTime() / (MEMORY_CACHE_SECONDS * 1000)
+        )
+        return `date-bucket:${bucket}`
+      }
+      return item
+    }) ?? 'null'
+  )
 }
 
 function toProjectObject<RowNames extends number | string | symbol>(
@@ -31,8 +46,7 @@ export function dbGet<
 >(
   s: T,
   filter: Filter<UnArray<ResourceMapping[T]>> = {},
-  onlyIncludedRows?: AllowedRows,
-  forceCache = false
+  onlyIncludedRows?: AllowedRows
 ): Promise<
   AllowedRows extends readonly (keyof UnArray<ResourceMapping[T]>)[]
     ? Array<Pick<UnArray<ResourceMapping[T]>, AllowedRows[number]>>
@@ -51,29 +65,23 @@ export function dbGet<
         return JSON.parse(result)
       }
 
-      const useCache = Object.keys(filter).length === 0 || forceCache
-      span.setAttribute('useCache', useCache)
-
-      if (useCache) {
-        const cached = await getCache<ResourceMapping[T]>(s)
-        if (cached) {
-          const endAt = performance.now()
-          span.setAttribute('dbRequestTime', endAt - startAt)
-          span.setAttribute('cacheHit', true)
-          return cached
-        } else {
-          span.setAttribute('cacheHit', false)
-        }
+      const cacheKey = `${String(s)}:${stableCacheFragment(filter)}:${stableCacheFragment(onlyIncludedRows)}`
+      const cached = await getCache<ResourceMapping[T]>(cacheKey)
+  
+      if (cached) {
+        const endAt = performance.now()
+        span.setAttribute('dbRequestTime', endAt - startAt)
+        span.setAttribute('cacheHit', true)
+        return cached
       }
+      span.setAttribute('cacheHit', false)
+
 
       const projectObject = onlyIncludedRows
         ? toProjectObject<keyof UnArray<ResourceMapping[T]>>(onlyIncludedRows)
         : undefined
       const result = await kv.get(s, filter, projectObject)
-
-      if (useCache) {
-        await setCache(s, result)
-      }
+      await setCache(cacheKey, result)
 
       const endAt = performance.now()
       span.setAttribute('dbRequestTime', endAt - startAt)

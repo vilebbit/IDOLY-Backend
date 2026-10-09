@@ -6,6 +6,7 @@ import { ErrorWithStatus } from './types'
 import { Request, Response as ExpressResponse } from 'express'
 import env from './env'
 import getOriginalUrl from './getOriginalUrl'
+import { cacheControlForPath } from './cachePolicy'
 
 function mergeSearchParams(params: any): Record<string, string> {
   const ret: Record<string, string> = {}
@@ -53,8 +54,7 @@ async function buildResponse(
       const commonCacheTags = {
         ...(status === 200
           ? {
-              'Cache-Control':
-                'public, max-age=3600, stale-while-revalidate=3600',
+              'Cache-Control': cacheControlForPath(url.pathname),
               ETag: `W/${eTag}`,
             }
           : {}),

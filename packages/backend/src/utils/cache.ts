@@ -1,3 +1,5 @@
+import { MEMORY_CACHE_SECONDS } from './cachePolicy'
+
 class Kv {
   #kv = new Map<string, { data: unknown; expireTs: number }>()
 
@@ -23,7 +25,6 @@ class Kv {
 }
 
 const kv = new Kv()
-const ONE_HOUR = 60 * 60
 
 export async function getCache<T>(key: string): Promise<T | null> {
   const res = await kv.get(key)
@@ -33,7 +34,7 @@ export async function getCache<T>(key: string): Promise<T | null> {
 export async function setCache(
   key: string,
   value: unknown,
-  expireIn: number = ONE_HOUR
+  expireIn: number = MEMORY_CACHE_SECONDS
 ) {
   await kv.set(key, value, expireIn)
 }
